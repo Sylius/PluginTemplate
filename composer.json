@@ -1,0 +1,16 @@
+{
+    "name": "jakubtobiasz/sylius-plugin-template",
+    "description": "Sylius Plugin Template",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakub Tobiasz",
+            "email": "jakub.tobiasz@icloud.com"
+        }
+    ],
+    "scripts": {
+        "post-create-project-cmd": [
+          "php configure.php"
+        ]
+    }
+}
