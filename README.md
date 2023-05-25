@@ -1,12 +1,15 @@
 <!--delete-->
+> **Attention!** Sylius Template Plugin is in alpha stage. Keep in mind that some bugs while creating a project may occur.
+> 
 <p align="center">
     <a href="https://sylius.com" target="_blank">
         <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
     </a>
 </p>
-<h1 align="center">Plugin Skeleton</h1>
 
-<p align="center">Skeleton for starting Sylius plugins.</p>
+<h1 align="center">Plugin Template</h1>
+
+<p align="center">Template for starting Sylius plugins.</p>
 
 ---
 This repo can be used to scaffold a Sylius plugin. Follow these steps to get started:
@@ -20,7 +23,8 @@ This repo can be used to scaffold a Sylius plugin. Follow these steps to get sta
 # :plugin_name
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)
+[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)  
+
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
 ## Installation
