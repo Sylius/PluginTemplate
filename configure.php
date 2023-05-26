@@ -56,6 +56,15 @@ function replace_in_file(string $file, array $replacements): void
     );
 }
 
+function replace_in_file_with_regex(string $file, string $pattern, string $replacement = ''): void
+{
+    $content = file_get_contents('webpack.config.js');
+
+    $result = preg_replace($pattern, $replacement, $content);
+
+    file_put_contents($file, $result);
+}
+
 function remove_composer_deps(array $names): void
 {
     $data = json_decode(file_get_contents(__DIR__ . '/composer.json'), true);
@@ -309,6 +318,17 @@ if (false === $useBehat) {
 }
 
 if (true === $removeScaffoldedFiles) {
+    // assets
+    deleteRecursively(__DIR__ . '/assets');
+    replace_in_file_with_regex(
+        __DIR__ . '/tests/Application/webpack.config.js',
+        "/\s+\.addEntry\(\'shop-$webpackAssetName\', \'\.\.\/\.\.\/assets\/shop\/entry\.js\'\)/",
+    );
+    replace_in_file_with_regex(
+        __DIR__ . '/tests/Application/webpack.config.js',
+        "/\s+\.addEntry\(\'admin-$webpackAssetName\', \'\.\.\/\.\.\/assets\/admin\/entry\.js\'\)/",
+    );
+
     // config
     safeUnlink(__DIR__ . '/config/services.xml');
     safeUnlink(__DIR__ . '/config/shop_routing.yml');

@@ -10,7 +10,7 @@ Encore
   .setOutputPath('public/build/shop/')
   .setPublicPath('/build/shop')
   .addEntry('shop-entry', '../../vendor/sylius/sylius/src/Sylius/Bundle/ShopBundle/Resources/private/entry.js')
-  .addEntry('shop-:webpack_asset_name', '../../assets/admin/entry.js')
+  .addEntry('shop-:webpack_asset_name', '../../assets/shop/entry.js')
   .disableSingleRuntimeChunk()
   .cleanupOutputBeforeBuild()
   .enableSourceMaps(!Encore.isProduction())
