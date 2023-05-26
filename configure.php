@@ -150,6 +150,19 @@ function safeUnlinkRecursively(string $path): void
     rmdir($path);
 }
 
+function renameSafely(string $oldName, string $newName): void
+{
+    if (!file_exists($oldName)) {
+        return;
+    }
+
+    if (file_exists($newName)) {
+        throw new RuntimeException("File {$newName} already exists");
+    }
+
+    rename($oldName, $newName);
+}
+
 function determineSeparator(string $path): string
 {
     return str_replace('/', DIRECTORY_SEPARATOR, $path);
@@ -332,8 +345,8 @@ if (true === $removeScaffoldedFiles) {
     // config
     safeUnlink(__DIR__ . '/config/services.xml');
     safeUnlink(__DIR__ . '/config/shop_routing.yml');
-    rename(__DIR__ . '/config/services.xml.empty', __DIR__ . '/config/services.xml');
-    rename(__DIR__ . '/config/shop_routing.yml.empty', __DIR__ . '/config/shop_routing.yml');
+    renameSafely(__DIR__ . '/config/services.xml.empty', __DIR__ . '/config/services.xml');
+    renameSafely(__DIR__ . '/config/shop_routing.yml.empty', __DIR__ . '/config/shop_routing.yml');
 
     //features
     safeUnlink(__DIR__ . '/features/running_a_sylius_feature.feature');
@@ -355,8 +368,8 @@ if (true === $removeScaffoldedFiles) {
     safeUnlinkRecursively(__DIR__ . '/tests/Behat/Page');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/suites.yml');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/services.xml');
-    rename(__DIR__ . '/tests/Behat/Resources/suites.yml.empty', __DIR__ . '/tests/Behat/Resources/suites.yml');
-    rename(__DIR__ . '/tests/Behat/Resources/services.xml.empty', __DIR__ . '/tests/Behat/Resources/services.xml');
+    renameSafely(__DIR__ . '/tests/Behat/Resources/suites.yml.empty', __DIR__ . '/tests/Behat/Resources/suites.yml');
+    renameSafely(__DIR__ . '/tests/Behat/Resources/services.xml.empty', __DIR__ . '/tests/Behat/Resources/services.xml');
 } else {
     // config
     safeUnlink(__DIR__ . '/config/shop_routing.yml.empty');
