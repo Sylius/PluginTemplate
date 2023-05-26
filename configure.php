@@ -124,7 +124,7 @@ function safeUnlink(string $filename): void
     }
 }
 
-function deleteRecursively(string $path): void
+function safeUnlinkRecursively(string $path): void
 {
     if (!file_exists($path)) {
         return;
@@ -144,7 +144,7 @@ function deleteRecursively(string $path): void
     $dir = new DirectoryIterator($path);
     foreach ($dir as $item) {
         if (!$item->isDot()) {
-            deleteRecursively($item->getPathname());
+            safeUnlinkRecursively($item->getPathname());
         }
     }
     rmdir($path);
@@ -256,7 +256,7 @@ if (false === $useDocker) {
     safeUnlink(__DIR__ . '/.docker/nginx/nginx.conf');
     safeUnlink(__DIR__ . '/.docker/php/php.ini');
     safeUnlink(__DIR__ . '/docker-compose.yml');
-    deleteRecursively(__DIR__ . '/.docker');
+    safeUnlinkRecursively(__DIR__ . '/.docker');
 }
 
 if (false === $usePsalm) {
@@ -291,16 +291,16 @@ if (false === $usePhpUnit) {
 
 if (false === $usePhpSpec) {
     safeUnlink(__DIR__ . '/phpspec.yml.dist');
-    deleteRecursively(__DIR__ . '/spec');
+    safeUnlinkRecursively(__DIR__ . '/spec');
     remove_composer_deps(['phpspec/phpspec']);
     remove_composer_script('phpspec');
 }
 
 if (false === $useBehat) {
     safeUnlink(__DIR__ . '/behat.yml.dist');
-    deleteRecursively(__DIR__ . '/etc');
-    deleteRecursively(__DIR__ . '/features');
-    deleteRecursively(__DIR__ . '/tests/Behat');
+    safeUnlinkRecursively(__DIR__ . '/etc');
+    safeUnlinkRecursively(__DIR__ . '/features');
+    safeUnlinkRecursively(__DIR__ . '/tests/Behat');
     remove_composer_deps([
         "behat/behat",
         "behat/mink-selenium2-driver",
@@ -319,7 +319,7 @@ if (false === $useBehat) {
 
 if (true === $removeScaffoldedFiles) {
     // assets
-    deleteRecursively(__DIR__ . '/assets');
+    safeUnlinkRecursively(__DIR__ . '/assets');
     replace_in_file_with_regex(
         __DIR__ . '/tests/Application/webpack.config.js',
         "/\s+\.addEntry\(\'shop-$webpackAssetName\', \'\.\.\/\.\.\/assets\/shop\/entry\.js\'\)/",
@@ -344,15 +344,15 @@ if (true === $removeScaffoldedFiles) {
     safeUnlink(__DIR__ . '/public/greeting.js');
 
     //src
-    deleteRecursively(__DIR__ . '/src/Controller');
+    safeUnlinkRecursively(__DIR__ . '/src/Controller');
 
     //templates
     safeUnlink(__DIR__ . '/templates/dynamic_greeting.html.twig');
     safeUnlink(__DIR__ . '/templates/static_greeting.html.twig');
 
     //tests
-    deleteRecursively(__DIR__ . '/tests/Behat/Context');
-    deleteRecursively(__DIR__ . '/tests/Behat/Page');
+    safeUnlinkRecursively(__DIR__ . '/tests/Behat/Context');
+    safeUnlinkRecursively(__DIR__ . '/tests/Behat/Page');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/suites.yml');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/services.xml');
     rename(__DIR__ . '/tests/Behat/Resources/suites.yml.empty', __DIR__ . '/tests/Behat/Resources/suites.yml');
