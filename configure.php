@@ -58,7 +58,7 @@ function replace_in_file(string $file, array $replacements): void
 
 function replace_in_file_with_regex(string $file, string $pattern, string $replacement = ''): void
 {
-    $content = file_get_contents('webpack.config.js');
+    $content = file_get_contents($file);
 
     $result = preg_replace($pattern, $replacement, $content);
 
