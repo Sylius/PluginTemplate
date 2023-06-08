@@ -24,6 +24,6 @@ behat.nojs:
 
 static.analysis: ecs psalm phpstan
 
-static.tests: phpspec phpunit behat.nojs
+static.tests: phpspec phpunit
 
 ci: static.analysis static.tests

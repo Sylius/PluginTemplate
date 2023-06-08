@@ -372,7 +372,7 @@ if (false === $useBehat) {
     remove_target_from_makefile('behat.nojs');
 }
 
-$removeStaticTestsTarget = false === $usePhpSpec && false === $usePhpUnit && false === $useBehat;
+$removeStaticTestsTarget = false === $usePhpSpec && false === $usePhpUnit;
 if ($removeStaticTestsTarget) {
     remove_target_from_makefile('static.tests');
 }
@@ -461,7 +461,7 @@ if ($runSetup) {
     run('composer update');
     run('php tests/Application/bin/console doctrine:database:create -e test');
     run('php tests/Application/bin/console doctrine:schema:update -e test -f');
-    run('composer ci');
+    run('make ci');
 }
 
 safeUnlink(__DIR__ . '/TEST_ARGUMENTS');
