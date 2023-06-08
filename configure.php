@@ -135,6 +135,11 @@ function remove_target_from_makefile(string $target): void {
                 return $dependency != $target;
             });
 
+            // If there are no dependencies left, continue to the next line
+            if (empty($dependencies)) {
+                continue;
+            }
+
             $line = $parts[0] . ': ' . implode(' ', $dependencies);
         }
 
