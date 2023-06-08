@@ -198,6 +198,7 @@ $fullNamespace = "{$vendorName}\\{$pluginName}";
 $fullNamespaceDoubleBackslash = "{$vendorName}\\\\{$pluginName}";
 $pluginClass = "{$vendorName}{$pluginName}";
 $configKey = title_snake(str_replace('/', '-', $packageName));
+$configKey = str_replace('_config', '', $configKey);
 $extensionClass = str_replace('Plugin', 'Extension', $pluginClass);
 
 $useDocker = confirm('Use Docker?', true);
