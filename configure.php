@@ -95,31 +95,6 @@ function remove_composer_deps(array $names): void
     file_put_contents(__DIR__ . '/composer.json', json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
 }
 
-function remove_composer_script(string $scriptName): void
-{
-    /** @var string $composerJson */
-    $composerJson = file_get_contents(__DIR__ . '/composer.json');
-    /** @var array{scripts: array<string, string|array>} $data */
-    $data = json_decode($composerJson, true);
-
-    if (!isset($data['scripts']) || !is_array($data['scripts'])) {
-        return;
-    }
-
-    foreach ($data['scripts'] as $name => $script) {
-        if (is_array($script) && in_array("@{$scriptName}", $script, true)) {
-            $data['scripts'][$name] = array_filter($data['scripts'][$name], fn (string $script) => $script !== "@{$scriptName}");
-            $data['scripts'][$name] = array_values($data['scripts'][$name]);
-        }
-
-        if ($scriptName === $name) {
-            unset($data['scripts'][$name]);
-        }
-    }
-
-    file_put_contents(__DIR__ . '/composer.json', json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
-}
-
 function remove_readme_paragraphs(string $file): void
 {
     $contents = file_get_contents($file);
