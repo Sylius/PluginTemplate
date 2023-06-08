@@ -363,6 +363,7 @@ if (false === $useBehat) {
         "friends-of-behat/symfony-extension",
         "friends-of-behat/variadic-extension",
     ]);
+    remove_target_from_makefile('behat.nojs');
 }
 
 if (true === $removeScaffoldedFiles) {
