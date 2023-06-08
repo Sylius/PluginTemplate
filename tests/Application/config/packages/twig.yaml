@@ -1,5 +1,5 @@
 twig:
-    paths: ['%kernel.project_dir%/templates']
+    paths: []
     debug: '%kernel.debug%'
     strict_variables: '%kernel.debug%'
 

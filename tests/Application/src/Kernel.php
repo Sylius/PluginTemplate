@@ -27,6 +27,11 @@ final class Kernel extends BaseKernel
         return $this->getProjectDir() . '/var/log';
     }
 
+    public function getProjectDir(): string
+    {
+        return dirname(__DIR__);
+    }
+
     public function registerBundles(): iterable
     {
         foreach ($this->getConfigurationDirectories() as $confDir) {
