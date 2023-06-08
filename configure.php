@@ -110,8 +110,9 @@ function remove_target_from_makefile(string $target): void {
 
     $lines = file($makefilePath, FILE_IGNORE_NEW_LINES);
     $output = [];
-    $inTarget = false;
 
+    // First pass: remove the target and any dependencies on it
+    $inTarget = false;
     foreach ($lines as $line) {
         // If it's the target to be removed, skip it
         if (preg_match("/^{$target}:/", $line)) {
@@ -135,21 +136,21 @@ function remove_target_from_makefile(string $target): void {
                 return $dependency != $target;
             });
 
-            // If there are no dependencies left, continue to the next line
-            if (empty($dependencies)) {
-                continue;
-            }
-
             $line = $parts[0] . ': ' . implode(' ', $dependencies);
         }
 
-        // If the line is not empty or the last line in the output is not empty, append it
-        if (!empty(trim($line)) || (!empty($output) && !empty(trim(end($output))))) {
-            $output[] = $line;
-        }
+        $output[] = $line;
     }
 
-    file_put_contents($makefilePath, implode("\n", $output));
+    // Second pass: remove any targets that have become empty
+    $output = array_filter($output, function($line) {
+        if (preg_match("/^.*:$/", trim($line))) {
+            return false;
+        }
+        return true;
+    });
+
+    file_put_contents($makefilePath, implode("\n", array_values($output)));
 }
 
 function safeUnlink(string $filename): void
