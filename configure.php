@@ -110,7 +110,6 @@ function remove_target_from_makefile(string $target): void {
 
     $lines = file($makefilePath, FILE_IGNORE_NEW_LINES);
     $output = [];
-
     $inTarget = false;
 
     foreach ($lines as $line) {
@@ -119,12 +118,10 @@ function remove_target_from_makefile(string $target): void {
             $inTarget = true;
             continue;
         }
-
         // If it's a command under the target to be removed, skip it
         else if ($inTarget && preg_match("/^\t/", $line)) {
             continue;
         }
-
         // If it's neither, reset the flag
         else {
             $inTarget = false;
@@ -141,7 +138,10 @@ function remove_target_from_makefile(string $target): void {
             $line = $parts[0] . ': ' . implode(' ', $dependencies);
         }
 
-        $output[] = $line;
+        // If the line is not empty or the last line in the output is not empty, append it
+        if (!empty(trim($line)) || (!empty($output) && !empty(trim(end($output))))) {
+            $output[] = $line;
+        }
     }
 
     file_put_contents($makefilePath, implode("\n", $output));
