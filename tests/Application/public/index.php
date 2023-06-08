@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Tests\:full_namespace\Application\Kernel;
+use App\Kernel;
 use Symfony\Component\ErrorHandler\Debug;
 use Symfony\Component\HttpFoundation\Request;
 
