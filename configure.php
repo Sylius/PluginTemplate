@@ -1,5 +1,15 @@
 <?php
 
+/**
+ * This file is part of the Sylius package.
+ * It is highly inspired by the spatie/package-skeleton-laravel
+ * We are aware this file is not the most beautiful piece of code in the world.
+ * But it gets the job done and is not a critical part of the package.
+ * There is a change this file will be refactored in a future version.
+ *
+ * Best regards from the Sylius Team.
+ */
+
 function ask(string $question, string $default = ''): string
 {
     $answer = readline($question.($default ? " ({$default})" : null).': ');
