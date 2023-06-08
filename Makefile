@@ -22,6 +22,9 @@ phpunit:
 behat.nojs:
 	APP_ENV=test vendor/bin/behat --tags="~@javascript"
 
+frontend.setup:
+	@cd tests/Application && npm install && npm run build
+
 static.analysis: ecs psalm phpstan
 
 static.tests: phpspec phpunit
