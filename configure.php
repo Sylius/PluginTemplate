@@ -458,9 +458,7 @@ if (false === $usePhpUnit && false === $useBehat) {
 $runSetup = confirm('Execute `composer install` and run tests?') ;
 
 if ($runSetup) {
-    run('composer update');
-    run('php tests/Application/bin/console doctrine:database:create -e test');
-    run('php tests/Application/bin/console doctrine:schema:update -e test -f');
+    run('make setup');
     run('make ci');
 }
 

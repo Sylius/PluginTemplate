@@ -30,6 +30,17 @@ frontend.build:
 
 frontend.setup: frontend.install frontend.build
 
+setup:
+	@composer install
+	@make frontend.setup
+	@cd tests/Application && APP_ENV=test bin/console doctrine:database:create --if-not-exists
+	@cd tests/Application && APP_ENV=test bin/console doctrine:schema:create
+	@cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load -n
+	@cd tests/Application && APP_ENV=test bin/console doctrine:database:create --if-not-exists -e test
+	@cd tests/Application && APP_ENV=test bin/console doctrine:schema:create -e test
+	@cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load -n -e test
+	@make serve
+
 static.analysis: ecs psalm phpstan
 
 static.tests: phpspec phpunit
