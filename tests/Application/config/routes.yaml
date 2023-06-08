@@ -1,9 +1,9 @@
-acme_sylius_example_shop:
+:config_key_shop:
     resource: "@:plugin_class/config/shop_routing.yml"
     prefix: /{_locale}
     requirements:
         _locale: ^[a-z]{2}(?:_[A-Z]{2})?$
 
-acme_sylius_example_admin:
+:config_key_admin:
     resource: "@:plugin_class/config/admin_routing.yml"
     prefix: /admin
