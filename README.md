@@ -1,6 +1,8 @@
 <!--delete-->
 > **Attention!** Sylius Template Plugin is in alpha stage. Keep in mind that some bugs while creating a project may occur.
 > 
+> > This repository is highly inspired by [spatie/package-skeleton-laravel](https://github.com/spatie/package-skeleton-laravel).
+> 
 <p align="center">
     <a href="https://sylius.com" target="_blank">
         <img src="https://demo.sylius.com/assets/shop/img/logo.png" />
@@ -12,12 +14,25 @@
 <p align="center">Template for starting Sylius plugins.</p>
 
 ---
+
+### Requirements
+
+- *nix based operating system (macOS, Linux, WSL2)
+- make
+- PHP version 8.0 or higher
+- Node.js version 16 or higher
+
+### Usage
+
 This repo can be used to scaffold a Sylius plugin. Follow these steps to get started:
 
-1. Press the "Use this template" button at the top of this repo to create a new repo with the contents of this skeleton.
-2. Run `php ./configure.php` to run a script that will replace all placeholders throughout all the files.
-3. Have fun creating your package.
-4. If you need help creating a plugin, consider reading our <a href="https://docs.sylius.com/en/latest/plugin-development-guide/index.html">Plugin Development</a> guide.
+1. Run `composer create-project sylius/plugin-template ProjectName`
+2. Have fun creating your package.
+3. If you need help creating a plugin, consider reading our <a href="https://docs.sylius.com/en/latest/plugin-development-guide/index.html">Plugin Development</a> guide.
+
+Alternatively you can use the "Use this template" button on GitHub to create a new repository based on this template.
+After that you can clone your freshly created repository and run `make configure` set up your brand-new plugin.
+
 ---
 <!--/delete-->
 # :plugin_name
