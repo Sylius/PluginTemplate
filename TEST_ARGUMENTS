@@ -1,17 +1,19 @@
-Jakub Tobiasz
-jakub.tobiasz@icloud.com
-Sylius
-ExamplePlugin
-sylius/example-plugin
-Example plugin for Sylius
-N
-Y
-Y
-Y
-Y
-Y
-Y
-N
-Y
-N
-N
+Jakub Tobiasz               # author's name
+jakub.tobiasz@icloud.com    # author's email
+Sylius                      # vendor's name
+ExamplePlugin               # plugin's name
+sylius/example-plugin       # plugin's composer package name
+Example plugin for Sylius   # plugin's description
+N                           # use docker
+Y                           # use psalm
+Y                           # use phpstan
+Y                           # use ecs
+Y                           # use phpunit
+Y                           # use phpspec
+Y                           # use behat
+Y                           # use github actions
+N                           # remove scaffolded files
+N                           # remove license file
+Y                           # modify files
+N                           # execute composer install and tests
+N                           # remove configure.php file
