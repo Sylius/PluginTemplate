@@ -363,8 +363,12 @@ if (true === $removeScaffoldedFiles) {
     // config
     safeUnlink(__DIR__ . '/config/services.xml');
     safeUnlink(__DIR__ . '/config/shop_routing.yml');
+    safeUnlink(__DIR__ . '/config/config.yaml');
+    safeUnlink(__DIR__ . '/config/packages/sylius_ui.php');
     renameSafely(__DIR__ . '/config/services.xml.empty', __DIR__ . '/config/services.xml');
     renameSafely(__DIR__ . '/config/shop_routing.yml.empty', __DIR__ . '/config/shop_routing.yml');
+    renameSafely(__DIR__ . '/config/config.yaml.empty', __DIR__ . '/config/config.yaml');
+    safeUnlinkRecursively(__DIR__ . '/config/packages');
 
     //features
     safeUnlink(__DIR__ . '/features/running_a_sylius_feature.feature');
@@ -380,6 +384,8 @@ if (true === $removeScaffoldedFiles) {
     //templates
     safeUnlink(__DIR__ . '/templates/dynamic_greeting.html.twig');
     safeUnlink(__DIR__ . '/templates/static_greeting.html.twig');
+    safeUnlinkRecursively(__DIR__ . '/templates/Admin');
+    safeUnlinkRecursively(__DIR__ . '/templates/Shop');
 
     //tests
     safeUnlinkRecursively(__DIR__ . '/tests/Behat/Context');
