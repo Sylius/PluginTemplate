@@ -35,7 +35,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
     ```yaml
     # config/routes/sylius_shop.yaml
 
-    :vendor_name_slug_:plugin_name_slug_shop:
+    :config_key_shop:
         resource: "@:plugin_class/config/shop_routing.yaml"
         prefix: /{_locale}
         requirements:
@@ -43,7 +43,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 
     # config/routes/sylius_admin.yaml
 
-    :vendor_name_slug_:plugin_name_slug_admin:
+    :config_key_admin:
         resource: "@:plugin_class/config/admin_routing.yml"
         prefix: /admin
     ```
@@ -60,7 +60,6 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 4. Apply migrations
     ```bash
     bin/console doctrine:migrations:migrate
-
     ```
 
 ## Changelog
@@ -81,4 +80,4 @@ Please review [our security policy](../../security/policy) on how to report secu
 
 ## License
 
-The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
+Please see the [License File](LICENSE.md) for more information about licensing.
