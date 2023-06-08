@@ -210,19 +210,16 @@ function determineSeparator(string $path): string
 
 function replaceForWindows(): array
 {
-    return preg_split('/\\r\\n|\\r|\\n/', run('dir /S /B * | findstr /v /i .git\ | findstr /v /i vendor | findstr /v /i node_modules | findstr /v /i '.basename(__FILE__).' | findstr /r /i /M /F:/ ":author_email :author_name :config_key :extension_class :full_namespace :full_namespace_double_backslash :package_description :package_name :plugin_class :plugin_class_lowercase :plugin_name :plugin_name_slug :webpack_asset_name :vendor_name_slug"'));
+    return preg_split('/\\r\\n|\\r|\\n/', run('dir /S /B * | findstr /v /i .git\ | findstr /v /i vendor | findstr /v /i node_modules | findstr /v /i '.basename(__FILE__).' | findstr /r /i /M /F:/ ":author_name :config_key :extension_class :full_namespace :full_namespace_double_backslash :package_description :package_name :plugin_class :plugin_class_lowercase :plugin_name :plugin_name_slug :webpack_asset_name :vendor_name_slug"'));
 }
 
 function replaceForAllOtherOSes(): array
 {
-    return explode(PHP_EOL, run('grep -E -r -l -i ":author_email|:author_name|:config_key|:extension_class|:full_namespace|:full_namespace_double_backslash|:package_description|:package_name|:plugin_class|:plugin_class_lowercase|:plugin_name|:plugin_name_slug|:webpack_asset_name|:vendor_name_slug" --exclude-dir=vendor --exclude-dir=node_modules --exclude-dir=tests/Application/vendor --exclude-dir=tests/Application/node_modules ./* ./.github/* | grep -v '.basename(__FILE__)));
+    return explode(PHP_EOL, run('grep -E -r -l -i ":author_name|:config_key|:extension_class|:full_namespace|:full_namespace_double_backslash|:package_description|:package_name|:plugin_class|:plugin_class_lowercase|:plugin_name|:plugin_name_slug|:webpack_asset_name|:vendor_name_slug" --exclude-dir=vendor --exclude-dir=node_modules --exclude-dir=tests/Application/vendor --exclude-dir=tests/Application/node_modules ./* ./.github/* | grep -v '.basename(__FILE__)));
 }
 
 $gitName = run('git config user.name');
 $authorName = ask('Author name', $gitName);
-
-$gitEmail = run('git config user.email');
-$authorEmail = ask('Author email', $gitEmail);
 
 $vendorName = ask('Vendor name', 'Acme');
 $vendorNameSlug = slugify($vendorName);
@@ -253,7 +250,7 @@ $removeScaffoldedFiles = confirm('Remove scaffolded files?');
 $removeLicenseFile = confirm('Remove license file?');
 
 writeln('------');
-writeln("Author       : {$authorName}, <{$authorEmail}>");
+writeln("Author       : {$authorName}");
 writeln("Vendor       : {$vendorName}");
 writeln("Plugin       : {$pluginName}");
 writeln("Package name : {$packageName} <{$packageDescription}>");
@@ -285,7 +282,6 @@ safeUnlink(__DIR__ . '/composer.json');
 
 foreach ($files as $file) {
     replace_in_file($file, [
-        ':author_email' => $authorEmail,
         ':author_name' => $authorName,
         ':config_key' => $configKey,
         ':extension_class' => $extensionClass,
