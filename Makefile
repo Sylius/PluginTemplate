@@ -34,7 +34,7 @@ configure:
 	@cd php configure.php
 
 setup:
-	@composer install
+	@composer update
 	@make frontend.setup
 	@cd tests/Application && APP_ENV=test bin/console doctrine:database:create --if-not-exists
 	@cd tests/Application && APP_ENV=test bin/console doctrine:schema:create
