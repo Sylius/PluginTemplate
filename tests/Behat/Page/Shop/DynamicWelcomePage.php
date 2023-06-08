@@ -32,7 +32,7 @@ class DynamicWelcomePage extends SymfonyPage implements WelcomePageInterface
      */
     public function getRouteName(): string
     {
-        return 'acme_sylius_example_dynamic_welcome';
+        return ':config_key_dynamic_welcome';
     }
 
     /**
