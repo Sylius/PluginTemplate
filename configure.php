@@ -65,6 +65,19 @@ function replace_in_file_with_regex(string $file, string $pattern, string $repla
     file_put_contents($file, $result);
 }
 
+function remove_composer_section(string $key): void
+{
+    $data = json_decode(file_get_contents(__DIR__ . '/composer.json'), true);
+
+    if (!isset($data[$key])) {
+        return;
+    }
+
+    unset($data[$key]);
+
+    file_put_contents(__DIR__ . '/composer.json', json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+}
+
 function remove_composer_deps(array $names): void
 {
     $data = json_decode(file_get_contents(__DIR__ . '/composer.json'), true);
@@ -209,6 +222,7 @@ $usePhpUnit = confirm('Use PHPUnit?', true);
 $usePhpSpec = confirm('Use PHPSpec?', true);
 $useBehat = confirm('Use Behat?', true);
 $removeScaffoldedFiles = confirm('Remove scaffolded files?');
+$removeLicenseFile = confirm('Remove license file?');
 
 writeln('------');
 writeln("Author       : {$authorName}, <{$authorEmail}>");
@@ -227,6 +241,7 @@ writeln('Use PHPSpec      : '.($usePhpSpec ? 'yes' : 'no'));
 writeln('Use Behat        : '.($useBehat ? 'yes' : 'no'));
 writeln('---');
 writeln('Remove scaffolded files : '.($removeScaffoldedFiles ? 'yes' : 'no'));
+writeln('Remove license file     : '.($removeLicenseFile ? 'yes' : 'no'));
 writeln('------');
 
 writeln('This script will replace the above values in all relevant files in the project directory.');
@@ -381,6 +396,11 @@ if (true === $removeScaffoldedFiles) {
     safeUnlink(__DIR__ . '/templates/.gitkeep');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/services.xml.empty');
     safeUnlink(__DIR__ . '/tests/Behat/Resources/suites.yml.empty');
+}
+
+if ($removeLicenseFile) {
+    safeUnlink(__DIR__ . '/LICENSE');
+    remove_composer_section('license');
 }
 
 if (false === $usePhpUnit && false === $useBehat) {
