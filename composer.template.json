@@ -3,12 +3,6 @@
     "description": ":package_description",
     "type": "sylius-plugin",
     "license": "MIT",
-    "authors": [
-        {
-            "name": ":author_name",
-            "email": ":author_email"
-        }
-    ],
     "autoload": {
         "psr-4": {
             ":full_namespace_double_backslash\\": "src/",
