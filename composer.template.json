@@ -73,29 +73,6 @@
         }
     },
     "scripts": {
-        "configure": "php configure.php",
-        "serve": "symfony serve --dir=tests/Application --daemon",
-        "server:stop": "symfony server:stop --dir=tests/Application",
-        "ecs": "ecs",
-        "psalm": "psalm",
-        "phpstan": "phpstan",
-        "phpspec": "phpspec run",
-        "phpunit": "phpunit",
-        "behat:nojs": "APP_ENV=test vendor/bin/behat --tags=\"~@javascript\"",
-        "static-analysis": [
-            "@ecs",
-            "@psalm",
-            "@phpstan"
-        ],
-        "tests": [
-            "@phpspec",
-            "@phpunit",
-            "@behat:nojs"
-        ],
-        "ci": [
-            "@static-analysis",
-            "@tests"
-        ],
         "post-install-cmd": [
             "php bin/create_node_symlink.php"
         ],

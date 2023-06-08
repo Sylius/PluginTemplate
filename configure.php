@@ -130,6 +130,48 @@ function remove_readme_paragraphs(string $file): void
     );
 }
 
+function remove_target_from_makefile(string $target): void {
+    $makefilePath = __DIR__ . '/Makefile';
+
+    $lines = file($makefilePath, FILE_IGNORE_NEW_LINES);
+    $output = [];
+
+    $inTarget = false;
+
+    foreach ($lines as $line) {
+        // If it's the target to be removed, skip it
+        if (preg_match("/^{$target}:/", $line)) {
+            $inTarget = true;
+            continue;
+        }
+
+        // If it's a command under the target to be removed, skip it
+        else if ($inTarget && preg_match("/^\t/", $line)) {
+            continue;
+        }
+
+        // If it's neither, reset the flag
+        else {
+            $inTarget = false;
+        }
+
+        // If the line contains the target as a dependency, remove it
+        if (strpos($line, $target) !== false) {
+            $parts = explode(':', $line);
+            $dependencies = explode(' ', trim($parts[1]));
+            $dependencies = array_filter($dependencies, function($dependency) use ($target) {
+                return $dependency != $target;
+            });
+
+            $line = $parts[0] . ': ' . implode(' ', $dependencies);
+        }
+
+        $output[] = $line;
+    }
+
+    file_put_contents($makefilePath, implode("\n", $output));
+}
+
 function safeUnlink(string $filename): void
 {
     if (file_exists($filename) && is_file($filename)) {
@@ -293,7 +335,7 @@ if (false === $useDocker) {
 if (false === $usePsalm) {
     safeUnlink(__DIR__ . '/psalm.xml');
     remove_composer_deps(['vimeo/psalm']);
-    remove_composer_script('psalm');
+    remove_target_from_makefile('psalm');
 }
 
 if (false === $usePhpStan) {
@@ -305,26 +347,26 @@ if (false === $usePhpStan) {
         'phpstan/phpstan-strict-rules',
         'phpstan/phpstan-webmozart-assert',
     ]);
-    remove_composer_script('phpstan');
+    remove_target_from_makefile('phpstan');
 }
 
 if (false === $useEcs) {
     safeUnlink(__DIR__ . '/ecs.php');
     remove_composer_deps(['sylius-labs/coding-standard']);
-    remove_composer_script('ecs');
+    remove_target_from_makefile('ecs');
 }
 
 if (false === $usePhpUnit) {
     safeUnlink(__DIR__ . '/phpunit.xml.dist');
     remove_composer_deps(['phpunit/phpunit']);
-    remove_composer_script('phpunit');
+    remove_target_from_makefile('phpunit');
 }
 
 if (false === $usePhpSpec) {
     safeUnlink(__DIR__ . '/phpspec.yml.dist');
     safeUnlinkRecursively(__DIR__ . '/spec');
     remove_composer_deps(['phpspec/phpspec']);
-    remove_composer_script('phpspec');
+    remove_target_from_makefile('phpspec');
 }
 
 if (false === $useBehat) {
@@ -437,5 +479,4 @@ $autoRemove = confirm('Let this script delete itself?', true);
 
 if ($autoRemove) {
     unlink(__FILE__);
-    remove_composer_script('configure');
 }
