@@ -221,6 +221,7 @@ $useEcs = confirm('Use ECS?', true);
 $usePhpUnit = confirm('Use PHPUnit?', true);
 $usePhpSpec = confirm('Use PHPSpec?', true);
 $useBehat = confirm('Use Behat?', true);
+$useGitHubActions = confirm('Use GitHub Actions?', true);
 $removeScaffoldedFiles = confirm('Remove scaffolded files?');
 $removeLicenseFile = confirm('Remove license file?');
 
@@ -232,13 +233,14 @@ writeln("Package name : {$packageName} <{$packageDescription}>");
 writeln("Namespace    : {$fullNamespace}");
 writeln('---');
 writeln('Packages & Utilities');
-writeln('Use Docker       : '.($useDocker ? 'yes' : 'no'));
-writeln('Use Psalm        : '.($usePsalm ? 'yes' : 'no'));
-writeln('Use PHPStan      : '.($usePhpStan ? 'yes' : 'no'));
-writeln('Use ECS          : '.($useEcs ? 'yes' : 'no'));
-writeln('Use PHPUnit      : '.($usePhpUnit ? 'yes' : 'no'));
-writeln('Use PHPSpec      : '.($usePhpSpec ? 'yes' : 'no'));
-writeln('Use Behat        : '.($useBehat ? 'yes' : 'no'));
+writeln('Use Docker         : '.($useDocker ? 'yes' : 'no'));
+writeln('Use Psalm          : '.($usePsalm ? 'yes' : 'no'));
+writeln('Use PHPStan        : '.($usePhpStan ? 'yes' : 'no'));
+writeln('Use ECS            : '.($useEcs ? 'yes' : 'no'));
+writeln('Use PHPUnit        : '.($usePhpUnit ? 'yes' : 'no'));
+writeln('Use PHPSpec        : '.($usePhpSpec ? 'yes' : 'no'));
+writeln('Use Behat          : '.($useBehat ? 'yes' : 'no'));
+writeln('Use GitHub Actions : '.($useGitHubActions ? 'yes' : 'no'));
 writeln('---');
 writeln('Remove scaffolded files : '.($removeScaffoldedFiles ? 'yes' : 'no'));
 writeln('Remove license file     : '.($removeLicenseFile ? 'yes' : 'no'));
@@ -401,6 +403,13 @@ if (true === $removeScaffoldedFiles) {
 if ($removeLicenseFile) {
     safeUnlink(__DIR__ . '/LICENSE');
     remove_composer_section('license');
+}
+
+if ($useGitHubActions) {
+    safeUnlink(__DIR__ . '/.github/workflows/ci.yaml');
+    renameSafely(__DIR__ . '/.github/workflows/ci.yaml.example', __DIR__ . '/.github/workflows/ci.yaml');
+} else {
+    safeUnlinkRecursively(__DIR__ . '/.github');
 }
 
 if (false === $usePhpUnit && false === $useBehat) {
