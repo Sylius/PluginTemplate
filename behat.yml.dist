@@ -46,7 +46,7 @@ default:
         FriendsOfBehat\SymfonyExtension:
             bootstrap: tests/Application/config/bootstrap.php
             kernel:
-                class: Tests\:full_namespace\Application\Kernel
+                class: App\Kernel
 
         FriendsOfBehat\VariadicExtension: ~
 
