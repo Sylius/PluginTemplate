@@ -22,9 +22,9 @@ final class Step3UpdateComposerDependencies
         $io->section(sprintf('Step 3 of %d: Updating composer.json', $stepsTotal));
 
         $dependenciesToBeRemoved = $this->getDependenciesToBeRemoved($configuration);
-        $io->progressStart(count($dependenciesToBeRemoved));
 
         $io->info(sprintf('Removing %d dependencies from the composer.json', count($dependenciesToBeRemoved)));
+        $io->progressStart(count($dependenciesToBeRemoved));
 
         foreach ($dependenciesToBeRemoved as $dependencyToBeRemoved) {
             $this->composerModifier->removePackage($dependencyToBeRemoved, self::COMPOSER_TEMPLATE_JSON);

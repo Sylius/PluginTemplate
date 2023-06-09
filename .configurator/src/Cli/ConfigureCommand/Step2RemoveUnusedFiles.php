@@ -21,9 +21,9 @@ final class Step2RemoveUnusedFiles
 
         $filesystem = new Filesystem();
         $filesToBeRemoved = $this->getFilesToBeRemoved($configuration);
-        $io->progressStart(count($filesToBeRemoved));
 
         $io->info(sprintf('Removing %d files', count($filesToBeRemoved)));
+        $io->progressStart(count($filesToBeRemoved));
 
         foreach ($filesToBeRemoved as $fileToBeRemoved) {
             $fullPath = sprintf('%s/%s', $this->projectTemplateDir, $fileToBeRemoved);
