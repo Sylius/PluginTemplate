@@ -1,4 +1,4 @@
-<!--delete-->
+<section:readme>
 > **Attention!** Sylius Template Plugin is in alpha stage. Keep in mind that some bugs while creating a project may occur.
 > 
 > > This repository is highly inspired by [spatie/package-skeleton-laravel](https://github.com/spatie/package-skeleton-laravel).
@@ -34,7 +34,7 @@ Alternatively you can use the "Use this template" button on GitHub to create a n
 After that you can clone your freshly created repository and run `make configure` set up your brand-new plugin.
 
 ---
-<!--/delete-->
+</section:readme>
 # :plugin_name
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)

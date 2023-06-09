@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
+use Sylius\PluginTemplate\Configurator\Cleaner\SectionCleaner;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step1ReplacePlaceholders;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step2RemoveUnusedFiles;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step3UpdateComposerDependencies;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step4RemoveScaffoldedFiles;
+use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step5SectionsCleanUp;
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
@@ -47,5 +49,14 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '%configurator.plugin_template_dir%',
         ])
         ->tag('configurator.step', ['priority' => -3])
+    ;
+
+    $services
+        ->set(Step5SectionsCleanUp::class)
+        ->args([
+            service(SectionCleaner::class),
+            '%configurator.plugin_template_dir%',
+        ])
+        ->tag('configurator.step', ['priority' => -4])
     ;
 };

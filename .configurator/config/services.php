@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Sylius\PluginTemplate\Configurator\Cleaner\SectionCleaner;
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
@@ -29,4 +30,6 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     $services->set(FileFinder::class);
 
     $services->set(PlaceholderReplacer::class);
+
+    $services->set(SectionCleaner::class);
 };
