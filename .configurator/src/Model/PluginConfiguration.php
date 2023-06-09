@@ -47,7 +47,7 @@ final class PluginConfiguration
         return in_array('psalm', $this->packages, true);
     }
 
-    public function usePHPStan(): bool
+    public function usePhpStan(): bool
     {
         return in_array('phpstan', $this->packages, true);
     }

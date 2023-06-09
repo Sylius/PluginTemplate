@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
+use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
@@ -19,6 +20,11 @@ return static function (ContainerConfigurator $containerConfigurator, ContainerB
     /** Services */
 
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(ComposerModifier::class)
+        ->args(['%configurator.plugin_template_dir%'])
+    ;
 
     $services->set(FileFinder::class);
 
