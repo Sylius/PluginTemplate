@@ -19,12 +19,13 @@ final class Step1ReplacePlaceholders
         'vendor',
         'node_modules',
         'tests/Application/vendor',
-        'tests/Application/node_modules'];
+        'tests/Application/node_modules',
+    ];
 
     public function __construct (
         private FileFinder $fileFinder,
         private PlaceholderReplacer $placeholderReplacer,
-        private string $projectDir,
+        private string $pluginTemplateDir,
     ) {
     }
 
@@ -52,7 +53,7 @@ final class Step1ReplacePlaceholders
     /** @return array<SplFileInfo> */
     private function getFilesWithPlaceholders(PluginConfiguration $configuration): array
     {
-        $pluginTemplateDirectory = dirname($this->projectDir);
+        $pluginTemplateDirectory = dirname($this->pluginTemplateDir);
 
         $files = $this->fileFinder->findContaining(
             $pluginTemplateDirectory,

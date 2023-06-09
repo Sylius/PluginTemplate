@@ -52,17 +52,17 @@ final class PluginConfiguration
         return in_array('phpstan', $this->packages, true);
     }
 
-    public function useECS(): bool
+    public function useEcs(): bool
     {
         return in_array('ecs', $this->packages, true);
     }
 
-    public function usePHPUnit(): bool
+    public function usePhpUnit(): bool
     {
         return in_array('phpunit', $this->packages, true);
     }
 
-    public function usePHPSpec(): bool
+    public function usePhpSpec(): bool
     {
         return in_array('phpspec', $this->packages, true);
     }
@@ -70,6 +70,11 @@ final class PluginConfiguration
     public function useBehat(): bool
     {
         return in_array('behat', $this->packages, true);
+    }
+
+    public function useGitHubActions(): bool
+    {
+        return $this->useGitHubActions;
     }
 
     public function isRemoveScaffoldedFiles(): bool
