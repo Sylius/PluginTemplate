@@ -55,7 +55,7 @@ final class Step1ReplacePlaceholders
     /** @return array<SplFileInfo> */
     private function getFilesWithPlaceholders(PluginConfiguration $configuration): array
     {
-        $pluginTemplateDirectory = dirname($this->pluginTemplateDir);
+        $pluginTemplateDirectory = $this->pluginTemplateDir;
 
         $files = $this->fileFinder->findContaining(
             $pluginTemplateDirectory,
