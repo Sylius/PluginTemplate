@@ -31,7 +31,7 @@ frontend.build:
 frontend.setup: frontend.install frontend.build
 
 configure:
-	@cd php configure.php
+	@php .configurator/cli configure
 
 setup:
 	@composer update

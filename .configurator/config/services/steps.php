@@ -19,7 +19,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service(PlaceholderReplacer::class),
             '%configurator.plugin_template_dir%',
         ])
-        ->tag('configurator.step', ['priority' => 1])
+        ->tag('configurator.step', ['priority' => 0])
     ;
 
     $services
@@ -27,6 +27,6 @@ return static function (ContainerConfigurator $containerConfigurator) {
         ->args([
             '%configurator.plugin_template_dir%',
         ])
-        ->tag('configurator.step', ['priority' => 2])
+        ->tag('configurator.step', ['priority' => -1])
     ;
 };
