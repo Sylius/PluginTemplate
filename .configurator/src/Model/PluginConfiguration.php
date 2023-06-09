@@ -77,7 +77,7 @@ final class PluginConfiguration
         return $this->useGitHubActions;
     }
 
-    public function isRemoveScaffoldedFiles(): bool
+    public function removeScaffoldedFiles(): bool
     {
         return $this->removeScaffoldedFiles;
     }

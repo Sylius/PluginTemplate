@@ -5,6 +5,7 @@ declare(strict_types=1);
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step1ReplacePlaceholders;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step2RemoveUnusedFiles;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step3UpdateComposerDependencies;
+use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step4RemoveScaffoldedFiles;
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
@@ -38,5 +39,13 @@ return static function (ContainerConfigurator $containerConfigurator) {
             service(ComposerModifier::class),
         ])
         ->tag('configurator.step', ['priority' => -2])
+    ;
+
+    $services
+        ->set(Step4RemoveScaffoldedFiles::class)
+        ->args([
+            '%configurator.plugin_template_dir%',
+        ])
+        ->tag('configurator.step', ['priority' => -3])
     ;
 };
