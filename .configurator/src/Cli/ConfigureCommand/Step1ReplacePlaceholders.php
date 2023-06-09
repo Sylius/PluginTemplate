@@ -18,8 +18,10 @@ final class Step1ReplacePlaceholders
         '.git',
         'vendor',
         'node_modules',
-        'tests/Application/vendor',
         'tests/Application/node_modules',
+        'tests/Application/public/build',
+        'tests/Application/public/bundles',
+        'tests/Application/var',
     ];
 
     public function __construct (
