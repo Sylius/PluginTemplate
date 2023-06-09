@@ -2,22 +2,16 @@
 
 declare(strict_types=1);
 
-use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
+use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
-use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator) {
+    $containerConfigurator->import(__DIR__ . '/services/**.php');
+
     $services = $containerConfigurator->services();
 
-    $services
-        ->set(ConfigureCommand::class)
-        ->args([
-            service(FileFinder::class),
-            '%kernel.project_dir%',
-        ])
-        ->tag('console.command', ['configurator' => true])
-    ;
-
     $services->set(FileFinder::class);
+
+    $services->set(PlaceholderReplacer::class);
 };

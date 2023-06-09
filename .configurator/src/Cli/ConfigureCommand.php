@@ -4,15 +4,15 @@ declare(strict_types=1);
 
 namespace Sylius\PluginTemplate\Configurator\Cli;
 
-use SplFileInfo;
 use Sylius\PluginTemplate\Configurator\Cli\Helper\Summarizer;
-use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Generator\NameGenerator;
+use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
+use Traversable;
 
 final class ConfigureCommand extends Command
 {
@@ -26,10 +26,13 @@ final class ConfigureCommand extends Command
         'behat' => 'Behat',
     ];
 
+    private array $steps;
+
     public function __construct (
-        private FileFinder $fileFinder,
-        private string $projectDir,
+        iterable $steps,
     ) {
+        $this->steps = $steps instanceof Traversable ? iterator_to_array($steps) : $steps;
+
         parent::__construct();
     }
 
@@ -50,71 +53,15 @@ final class ConfigureCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
+        $configuration = PluginConfiguration::fromArray($input->getOptions());
 
-        $filesWithPlaceholders = $this->getFilesWithPlaceholders($input);
+        $io->title('Welcome to the Sylius Plugin configurator!');
 
-        $io->info(sprintf('Found %d files containing placeholders to be replaced.', count($filesWithPlaceholders)));
-
-        $io->progressStart(count($filesWithPlaceholders));
-
-        foreach ($filesWithPlaceholders as $file) {
-            $this->replacePlaceholders($input, $file->getRealPath());
-            $io->progressAdvance();
+        foreach ($this->steps as $step) {
+            $step($io, $configuration, count($this->steps));
         }
 
         return self::SUCCESS;
-    }
-
-    /** @return array<SplFileInfo> */
-    private function getFilesWithPlaceholders(InputInterface $input): array
-    {
-        $pluginTemplateDirectory = dirname($this->projectDir);
-
-        $files = $this->fileFinder->findContaining(
-            $pluginTemplateDirectory,
-            array_keys($this->getPlaceholdersWithReplacements($input)),
-            $this->getExcludedFromSearchDirectories(),
-        );
-
-        return iterator_to_array($files);
-    }
-
-    private function replacePlaceholders(InputInterface $input, string $path): void
-    {
-        $placeholdersWithReplacements = $this->getPlaceholdersWithReplacements($input);
-
-        $fileContent = file_get_contents($path);
-
-        $fileContent = str_replace(
-            array_keys($placeholdersWithReplacements),
-            array_values($placeholdersWithReplacements),
-            $fileContent,
-        );
-
-        file_put_contents($path, $fileContent);
-    }
-
-    private function getExcludedFromSearchDirectories(): array
-    {
-        return ['vendor', 'node_modules', 'tests/Application/vendor', 'tests/Application/node_modules'];
-    }
-
-    private function getPlaceholdersWithReplacements(InputInterface $input): array
-    {
-        return [
-            ':config_key' => '',
-            ':extension_class' => '',
-            ':full_namespace_double_backslash' => '',
-            ':full_namespace' => '',
-            ':package_description' => '',
-            ':package_name' => '',
-            ':plugin_class_lowercase' => '',
-            ':plugin_class' => '',
-            ':plugin_name_slug' => '',
-            ':plugin_name' => '',
-            ':webpack_asset_name' => '',
-            ':vendor_name_slug' => '',
-        ];
     }
 
     protected function interact(InputInterface $input, OutputInterface $output): void
