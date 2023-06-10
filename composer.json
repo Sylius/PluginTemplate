@@ -25,9 +25,17 @@
         "symfony/runtime": "6.3.*",
         "symfony/yaml": "6.3.*"
     },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0"
+    },
     "autoload": {
         "psr-4": {
             "Sylius\\PluginTemplate\\Configurator\\": ".configurator/src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Sylius\\PluginTemplate\\Configurator\\Tests\\": ".configurator/tests/"
         }
     },
     "scripts": {

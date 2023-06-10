@@ -19,8 +19,8 @@ final class NameGenerator
     public static function generateConfigKey(string $vendor, string $pluginName): string
     {
         $packageName = self::generatePackageName($vendor, $pluginName);
-
         $packageName = str_replace('/', '-', $packageName);
+        $packageName = str_replace('-plugin', '', $packageName);
 
         return self::toSnakeCase($packageName);
     }
@@ -59,6 +59,8 @@ final class NameGenerator
 
     public static function slugify(string $subject, string $separator = '-'): string
     {
+        $subject = ucwords(str_replace(' ', '', $subject));
+
         return strtolower(trim(preg_replace('/(?<!^)[A-Z]/', sprintf('%s$0', $separator), $subject)));
     }
 }

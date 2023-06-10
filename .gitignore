@@ -10,7 +10,7 @@
 /.phpunit.result.cache
 /behat.yml
 /phpspec.yml
-/phpunit.xml
+/.configurator/phpunit.xml
 .phpunit.result.cache
 
 # Symfony CLI https://symfony.com/doc/current/setup/symfony_server.html#different-php-settings-per-project
