@@ -56,8 +56,6 @@ final class ConfigureCommand extends Command
         $io = new SymfonyStyle($input, $output);
         $configuration = PluginConfiguration::fromArray($input->getOptions());
 
-        $io->title('Welcome to the Sylius Plugin configurator!');
-
         foreach ($this->steps as $step) {
             $step($io, $configuration, count($this->steps));
         }
@@ -123,5 +121,12 @@ final class ConfigureCommand extends Command
         }
 
         Summarizer::displaySummary($input, $output);
+
+        $confirmAnswers = $io->confirm('Does everything look good?');
+
+        if (!$confirmAnswers) {
+            $io->error('Please re-run the command with the correct options.');
+            exit(1);
+        }
     }
 }
