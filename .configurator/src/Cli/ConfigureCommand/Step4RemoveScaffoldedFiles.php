@@ -51,21 +51,6 @@ final class Step4RemoveScaffoldedFiles
 
         $io->progressFinish();
 
-        $filesToBeRenamed = $this->getFilesToBeRenamed();
-
-        $io->info(sprintf('Renaming %d scaffolded files', count($filesToBeRenamed)));
-        $io->progressStart(count($filesToBeRenamed));
-
-        foreach ($filesToBeRenamed as $fileToBeRenamed => $newFileName) {
-            $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeRenamed);
-            $newFilePath = sprintf('%s/%s', $this->pluginTemplateDir, $newFileName);
-            $filesystem->rename($filePath, $newFilePath);
-
-            $io->progressAdvance();
-        }
-
-        $io->progressFinish();
-
         $io->success(sprintf('Step 4 of %d completed!', $stepsTotal));
     }
 

@@ -8,7 +8,7 @@ use Sylius\PluginTemplate\Configurator\Cleaner\SectionCleaner;
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
-final class Step5SectionsCleanUp
+final class Step5CleanUpSections
 {
     private const REMOVE = 'remove';
 

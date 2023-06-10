@@ -42,6 +42,7 @@ final class Step2RemoveUnusedFiles
         $result = [
             '.github/workflows/ci.yaml',
             'composer.json',
+            'composer.lock',
         ];
 
         if (!$configuration->useDocker()) {
