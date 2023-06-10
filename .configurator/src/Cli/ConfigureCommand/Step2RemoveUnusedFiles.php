@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -27,8 +28,12 @@ final class Step2RemoveUnusedFiles
 
         foreach ($filesToBeRemoved as $fileToBeRemoved) {
             $fullPath = sprintf('%s/%s', $this->projectTemplateDir, $fileToBeRemoved);
-
             $filesystem->remove($fullPath);
+
+            if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                $io->writeln(sprintf('Removed %s', $fullPath));
+            }
+
             $io->progressAdvance();
         }
 

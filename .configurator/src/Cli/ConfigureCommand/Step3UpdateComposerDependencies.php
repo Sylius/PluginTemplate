@@ -6,6 +6,7 @@ namespace Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
 use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class Step3UpdateComposerDependencies
@@ -28,6 +29,11 @@ final class Step3UpdateComposerDependencies
 
         foreach ($dependenciesToBeRemoved as $dependencyToBeRemoved) {
             $this->composerModifier->removePackage($dependencyToBeRemoved, self::COMPOSER_TEMPLATE_JSON);
+
+            if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                $io->writeln(sprintf('Removed %s dependency', $dependencyToBeRemoved));
+            }
+
             $io->progressAdvance();
         }
 

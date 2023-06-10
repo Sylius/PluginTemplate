@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -30,6 +31,10 @@ final class Step4RemoveScaffoldedFiles
             foreach ($filesToBeCleanedUp as $fileToBeCleanedUp) {
                 $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeCleanedUp);
                 $filesystem->remove($filePath);
+
+                if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                    $io->writeln(sprintf('Removed %s file', $fileToBeCleanedUp));
+                }
             }
 
             $io->success(sprintf('Step 4 of %d completed!', $stepsTotal));
@@ -45,6 +50,10 @@ final class Step4RemoveScaffoldedFiles
         foreach ($filesToBeRemoved as $fileToBeRemoved) {
             $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeRemoved);
             $filesystem->remove($filePath);
+
+            if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                $io->writeln(sprintf('Removed %s file', $fileToBeRemoved));
+            }
 
             $io->progressAdvance();
         }
@@ -109,16 +118,5 @@ final class Step4RemoveScaffoldedFiles
         $result[] = 'tests/Behat/Resources/services.xml';
 
         return $result;
-    }
-
-    private function getFilesToBeRenamed(): array
-    {
-        return [
-            'config/services.xml.empty' => 'config/services.xml',
-            'config/shop_routing.yml.empty' => 'config/shop_routing.yml',
-            'config/config.yaml.empty' => 'config/config.yaml',
-            'tests/Behat/Resources/suites.yml.empty' => 'tests/Behat/Resources/suites.yml',
-            'tests/Behat/Resources/services.xml.empty' => 'tests/Behat/Resources/services.xml',
-        ];
     }
 }

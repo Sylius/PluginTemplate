@@ -9,6 +9,7 @@ use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Generator\NameGenerator;
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class Step1ReplacePlaceholders
@@ -43,6 +44,11 @@ final class Step1ReplacePlaceholders
 
         foreach ($filesWithPlaceholders as $file) {
             $this->placeholderReplacer->replaceInFile($file->getRealPath(), $this->getPlaceholdersWithReplacements($configuration));
+
+            if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                $io->writeln(sprintf('Replaced placeholders in %s', $file->getRealPath()));
+            }
+
             $io->progressAdvance();
         }
 

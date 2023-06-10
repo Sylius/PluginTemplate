@@ -6,6 +6,7 @@ namespace Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 
 use Sylius\PluginTemplate\Configurator\Cleaner\SectionCleaner;
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 final class Step5CleanUpSections
@@ -34,8 +35,16 @@ final class Step5CleanUpSections
 
                 if ($action === self::REMOVE) {
                     $this->sectionCleaner->removeSection($filePath, $sectionName);
+
+                    if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                        $io->writeln(sprintf('Removed %s section in %s', $sectionName, $fileName));
+                    }
                 } else {
                     $this->sectionCleaner->leaveSection($filePath, $sectionName);
+
+                    if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                        $io->writeln(sprintf('Left %s section in %s', $sectionName, $fileName));
+                    }
                 }
             }
         }

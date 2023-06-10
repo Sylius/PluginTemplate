@@ -6,6 +6,7 @@ namespace Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand;
 
 use Sylius\PluginTemplate\Configurator\Generator\NameGenerator;
 use Sylius\PluginTemplate\Configurator\Model\PluginConfiguration;
+use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Symfony\Component\Filesystem\Filesystem;
 
@@ -31,6 +32,10 @@ final class Step6RenameFiles
             $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeRenamed);
             $newFilePath = sprintf('%s/%s', $this->pluginTemplateDir, $newFileName);
             $filesystem->rename($filePath, $newFilePath);
+
+            if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
+                $io->writeln(sprintf('Renamed %s to %s', $filePath, $newFilePath));
+            }
 
             $io->progressAdvance();
         }
