@@ -61,10 +61,10 @@ final class Step6RenameFiles
 
         $result['composer.json.template'] = 'composer.json';
 
-        $pluginClass = NameGenerator::generatePluginClass($configuration->getVendorName(), $configuration->getPackageName());
+        $pluginClass = NameGenerator::generatePluginClass($configuration->getVendorName(), $configuration->getPluginName());
         $result['src/Plugin.php'] = sprintf('src/%s.php', $pluginClass);
 
-        $extensionClass = NameGenerator::generateExtensionClass($configuration->getVendorName(), $configuration->getPackageName());
+        $extensionClass = NameGenerator::generateExtensionClass($configuration->getVendorName(), $configuration->getPluginName());
         $result['src/DependencyInjection/Extension.php'] = sprintf('src/DependencyInjection/%s.php', $extensionClass);
 
         return $result;
