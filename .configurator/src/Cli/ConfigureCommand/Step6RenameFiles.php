@@ -59,7 +59,7 @@ final class Step6RenameFiles
             $result['.github/workflows/ci.yaml.example'] = '.github/workflows/ci.yaml';
         }
 
-        $result['composer.template.json'] = 'composer.json';
+        $result['composer.json.template'] = 'composer.json';
 
         $pluginClass = NameGenerator::generatePluginClass($configuration->getVendorName(), $configuration->getPackageName());
         $result['src/Plugin.php'] = sprintf('src/%s.php', $pluginClass);
