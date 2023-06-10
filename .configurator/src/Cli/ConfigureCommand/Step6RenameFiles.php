@@ -26,7 +26,6 @@ final class Step6RenameFiles
         $filesToBeRenamed = $this->getFilesToBeRenamed($configuration);
 
         $io->info(sprintf('Renaming %d files', count($filesToBeRenamed)));
-        $io->progressStart(count($filesToBeRenamed));
 
         foreach ($filesToBeRenamed as $fileToBeRenamed => $newFileName) {
             $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeRenamed);
@@ -36,11 +35,7 @@ final class Step6RenameFiles
             if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
                 $io->writeln(sprintf('Renamed %s to %s', $filePath, $newFilePath));
             }
-
-            $io->progressAdvance();
         }
-
-        $io->progressFinish();
 
         $io->success(sprintf('Step 6 of %d completed!', $stepsTotal));
     }

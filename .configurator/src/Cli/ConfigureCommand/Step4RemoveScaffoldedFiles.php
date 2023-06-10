@@ -45,7 +45,6 @@ final class Step4RemoveScaffoldedFiles
         $filesToBeRemoved = $this->getFilesToBeRemoved();
 
         $io->info(sprintf('Removing %d scaffolded files', count($filesToBeRemoved)));
-        $io->progressStart(count($filesToBeRemoved));
 
         foreach ($filesToBeRemoved as $fileToBeRemoved) {
             $filePath = sprintf('%s/%s', $this->pluginTemplateDir, $fileToBeRemoved);
@@ -54,11 +53,7 @@ final class Step4RemoveScaffoldedFiles
             if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
                 $io->writeln(sprintf('Removed %s file', $fileToBeRemoved));
             }
-
-            $io->progressAdvance();
         }
-
-        $io->progressFinish();
 
         $io->success(sprintf('Step 4 of %d completed!', $stepsTotal));
     }

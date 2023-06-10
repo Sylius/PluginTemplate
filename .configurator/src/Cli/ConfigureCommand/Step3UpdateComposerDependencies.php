@@ -25,7 +25,6 @@ final class Step3UpdateComposerDependencies
         $dependenciesToBeRemoved = $this->getDependenciesToBeRemoved($configuration);
 
         $io->info(sprintf('Removing %d dependencies from the composer.json', count($dependenciesToBeRemoved)));
-        $io->progressStart(count($dependenciesToBeRemoved));
 
         foreach ($dependenciesToBeRemoved as $dependencyToBeRemoved) {
             $this->composerModifier->removePackage($dependencyToBeRemoved, self::COMPOSER_TEMPLATE_JSON);
@@ -33,11 +32,7 @@ final class Step3UpdateComposerDependencies
             if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
                 $io->writeln(sprintf('Removed %s dependency', $dependencyToBeRemoved));
             }
-
-            $io->progressAdvance();
         }
-
-        $io->progressFinish();
 
         $io->success(sprintf('Step 3 of %d completed!', $stepsTotal));
     }

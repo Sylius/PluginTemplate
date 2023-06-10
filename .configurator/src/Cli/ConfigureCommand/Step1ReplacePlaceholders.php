@@ -40,19 +40,13 @@ final class Step1ReplacePlaceholders
 
         $io->info(sprintf('Found %d files containing placeholders to be replaced.', count($filesWithPlaceholders)));
 
-        $io->progressStart(count($filesWithPlaceholders));
-
         foreach ($filesWithPlaceholders as $file) {
             $this->placeholderReplacer->replaceInFile($file->getRealPath(), $this->getPlaceholdersWithReplacements($configuration));
 
             if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
                 $io->writeln(sprintf('Replaced placeholders in %s', $file->getRealPath()));
             }
-
-            $io->progressAdvance();
         }
-
-        $io->progressFinish();
 
         $io->success(sprintf('Step 1 of %d completed!', $stepsTotal));
     }

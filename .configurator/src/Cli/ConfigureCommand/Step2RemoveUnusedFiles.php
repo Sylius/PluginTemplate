@@ -24,7 +24,6 @@ final class Step2RemoveUnusedFiles
         $filesToBeRemoved = $this->getFilesToBeRemoved($configuration);
 
         $io->info(sprintf('Removing %d files', count($filesToBeRemoved)));
-        $io->progressStart(count($filesToBeRemoved));
 
         foreach ($filesToBeRemoved as $fileToBeRemoved) {
             $fullPath = sprintf('%s/%s', $this->projectTemplateDir, $fileToBeRemoved);
@@ -33,11 +32,7 @@ final class Step2RemoveUnusedFiles
             if ($io->getVerbosity() === OutputInterface::VERBOSITY_DEBUG) {
                 $io->writeln(sprintf('Removed %s', $fullPath));
             }
-
-            $io->progressAdvance();
         }
-
-        $io->progressFinish();
 
         $io->success(sprintf('Step 2 of %d completed!', $stepsTotal));
     }
