@@ -57,7 +57,7 @@ final class ConfigureCommand extends Command
         $configuration = PluginConfiguration::fromArray($input->getOptions());
 
         foreach ($this->steps as $step) {
-            $step($io, $configuration, count($this->steps));
+            $step($io, $configuration, count($this->steps) - 1); // -1 because we don't count the requirements step
         }
 
         return self::SUCCESS;

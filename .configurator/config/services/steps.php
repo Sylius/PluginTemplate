@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Sylius\PluginTemplate\Configurator\Cleaner\SectionCleaner;
+use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step0RequirementsChecker;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step1ReplacePlaceholders;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step2RemoveUnusedFiles;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step3UpdateComposerDependencies;
@@ -17,6 +18,11 @@ use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return static function (ContainerConfigurator $containerConfigurator) {
     $services = $containerConfigurator->services();
+
+    $services
+        ->set(Step0RequirementsChecker::class)
+        ->tag('configurator.step', ['priority' => 1])
+    ;
 
     $services
         ->set(Step1ReplacePlaceholders::class)
