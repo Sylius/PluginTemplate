@@ -126,7 +126,7 @@ final class ConfigureCommand extends Command
 
         if (null === $input->getOption('removeScaffoldedFiles')) {
             $removeScaffoldedFiles = $io->confirm('Would you like to keep scaffolded files?');
-            $input->setOption('removeScaffoldedFiles', $removeScaffoldedFiles);
+            $input->setOption('removeScaffoldedFiles', !$removeScaffoldedFiles);
         }
 
         $io->info('Database configuration');
