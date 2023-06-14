@@ -14,6 +14,12 @@ final class PluginConfiguration
         private array $packages,
         private bool $useGitHubActions,
         private bool $removeScaffoldedFiles,
+        private string $databaseEngine,
+        private string $databaseUser,
+        private string $databasePassword,
+        private string $databaseName,
+        private string $databaseHost,
+        private string $databasePort,
     ) {
     }
 
@@ -82,6 +88,19 @@ final class PluginConfiguration
         return $this->removeScaffoldedFiles;
     }
 
+    public function getDatabaseConnectionString(): string
+    {
+        return sprintf(
+            '%s://%s:%s@%s:%s/%s',
+            $this->databaseEngine,
+            $this->databaseUser,
+            $this->databasePassword,
+            $this->databaseHost,
+            $this->databasePort,
+            $this->databaseName,
+        );
+    }
+
     public static function fromArray(array $data): self
     {
         return new self(
@@ -92,6 +111,12 @@ final class PluginConfiguration
             $data['packages'],
             $data['useGitHubActions'],
             $data['removeScaffoldedFiles'],
+            $data['databaseEngine'],
+            $data['databaseUser'],
+            $data['databasePassword'],
+            $data['databaseName'],
+            $data['databaseHost'],
+            $data['databasePort'],
         );
     }
 }

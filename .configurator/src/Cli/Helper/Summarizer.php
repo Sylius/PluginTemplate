@@ -45,6 +45,14 @@ final class Summarizer
             ['Use PHPUnit' => self::isPackageEnabled('phpunit', $packages) ? 'Yes' : 'No'],
             ['Use PHPSpec' => self::isPackageEnabled('phpspec', $packages) ? 'Yes' : 'No'],
             ['Use Behat' => self::isPackageEnabled('behat', $packages) ? 'Yes' : 'No'],
+            new TableSeparator(),
+            'Database',
+            '',
+            ['Database user' => $input->getOption('databaseUser')],
+            ['Database password' => '********'],
+            ['Database name' => $input->getOption('databaseName')],
+            ['Database host' => $input->getOption('databaseHost')],
+            ['Database port' => $input->getOption('databasePort')],
         );
     }
 

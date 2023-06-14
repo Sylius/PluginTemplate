@@ -73,6 +73,7 @@ final class Step1ReplacePlaceholders
 
         return [
             ':config_key' => NameGenerator::generateConfigKey($vendorName, $pluginName),
+            ':database_connection_string' => $configuration->getDatabaseConnectionString(),
             ':extension_class' => NameGenerator::generateExtensionClass($vendorName, $pluginName),
             ':full_namespace_double_backslash' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: true),
             ':full_namespace' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: false),

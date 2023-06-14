@@ -11,6 +11,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Traversable;
@@ -48,6 +49,12 @@ final class ConfigureCommand extends Command
             ->addOption('packages', mode: InputOption::VALUE_IS_ARRAY | InputOption::VALUE_REQUIRED)
             ->addOption('useGitHubActions', mode: InputOption::VALUE_REQUIRED)
             ->addOption('removeScaffoldedFiles', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databaseEngine', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databaseUser', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databasePassword', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databaseName', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databaseHost', mode: InputOption::VALUE_REQUIRED)
+            ->addOption('databasePort', mode: InputOption::VALUE_REQUIRED)
         ;
     }
 
@@ -69,7 +76,7 @@ final class ConfigureCommand extends Command
 
         $io->title('Welcome to the Sylius Plugin configurator!');
 
-        $io->section('Information gathering');
+        $io->section('Plugin information configuration');
 
         if (null === $input->getOption('vendorName')) {
             $vendorName = $io->ask('What is your organization\'s name?', 'Acme');
@@ -95,14 +102,16 @@ final class ConfigureCommand extends Command
             $input->setOption('description', $description);
         }
 
+        $io->info('Tooling configuration');
+
         if ([] === $input->getOption('packages')) {
             $chosenPackages = [];
 
             foreach (self::AVAILABLE_PACKAGES as $package => $name) {
-                $confirmationQuestion = new ConfirmationQuestion(sprintf('Would you like to use %s?', $name), true);
-                $confirmationQuestion->setAutocompleterValues(['y', 'yes', 'n', 'no']);
+                $databaseChoiceQuestion = new ConfirmationQuestion(sprintf('Would you like to use %s?', $name), true);
+                $databaseChoiceQuestion->setAutocompleterValues(['y', 'yes', 'n', 'no']);
 
-                if ($io->askQuestion($confirmationQuestion)) {
+                if ($io->askQuestion($databaseChoiceQuestion)) {
                     $chosenPackages[] = $package;
                 }
             }
@@ -116,8 +125,42 @@ final class ConfigureCommand extends Command
         }
 
         if (null === $input->getOption('removeScaffoldedFiles')) {
-            $removeScaffoldedFiles = $io->confirm('Would you like to remove scaffolded files?', false);
+            $removeScaffoldedFiles = $io->confirm('Would you like to keep scaffolded files?');
             $input->setOption('removeScaffoldedFiles', $removeScaffoldedFiles);
+        }
+
+        $io->info('Database configuration');
+
+        if (null === $input->getOption('databaseEngine')) {
+            $databaseChoiceQuestion = new ChoiceQuestion('What is the database engine?', ['mysql', 'pgsql'], 'mysql');
+
+            $databaseEngine = $io->askQuestion($databaseChoiceQuestion);
+            $input->setOption('databaseEngine', $databaseEngine);
+        }
+
+        if (null === $input->getOption('databaseUser')) {
+            $databaseUser = $io->ask('What is the database user?', 'root');
+            $input->setOption('databaseUser', $databaseUser);
+        }
+
+        if (null === $input->getOption('databasePassword')) {
+            $databasePassword = $io->askHidden('What is the database password?');
+            $input->setOption('databasePassword', $databasePassword);
+        }
+
+        if (null === $input->getOption('databaseName')) {
+            $databaseName = $io->ask('What is the database name?', 'sylius');
+            $input->setOption('databaseName', $databaseName);
+        }
+
+        if (null === $input->getOption('databaseHost')) {
+            $databaseHost = $io->ask('What is the database host?', 'localhost');
+            $input->setOption('databaseHost', $databaseHost);
+        }
+
+        if (null === $input->getOption('databasePort')) {
+            $databasePort = $io->ask('What is the database port?', '3306');
+            $input->setOption('databasePort', $databasePort);
         }
 
         Summarizer::displaySummary($input, $output);
