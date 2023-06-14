@@ -12,7 +12,7 @@ final class SectionCleaner
 
         file_put_contents(
             $filePath,
-            preg_replace(sprintf('/<section:%s>.*<\/section:%s>\n/s', $sectionName, $sectionName), '', $content) ?: $content
+            preg_replace(sprintf('/<section:%s>.*<\/section:%s>\n/sU', $sectionName, $sectionName), '', $content) ?: $content
         );
     }
 
