@@ -45,6 +45,9 @@
     },
     "config": {
         "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": false,
+            "phpstan/extension-installer": false,
+            "symfony/flex": false,
             "symfony/runtime": true
         }
     }
