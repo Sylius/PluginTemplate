@@ -69,6 +69,7 @@ final class Step6RenameFiles
 
         $result['tests/Application/.env.local.example']  = 'tests/Application/.env.local';
         $result['tests/Application/.env.test.local.example']  = 'tests/Application/.env.test.local';
+        $result['symfony.lock.example'] = 'symfony.lock';
 
         return $result;
     }
