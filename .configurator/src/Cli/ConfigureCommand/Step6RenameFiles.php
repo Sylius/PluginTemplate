@@ -67,8 +67,8 @@ final class Step6RenameFiles
         $extensionClass = NameGenerator::generateExtensionClass($configuration->getVendorName(), $configuration->getPluginName());
         $result['src/DependencyInjection/Extension.php'] = sprintf('src/DependencyInjection/%s.php', $extensionClass);
 
-        $result['tests/Application/.env.local.example']  = 'tests/Application/.env.local';
-        $result['tests/Application/.env.test.local.example']  = 'tests/Application/.env.test.local';
+        $result['tests/Application/env.local.example']  = 'tests/Application/.env.local';
+        $result['tests/Application/env.test.local.example']  = 'tests/Application/.env.test.local';
         $result['symfony.lock.example'] = 'symfony.lock';
 
         return $result;
