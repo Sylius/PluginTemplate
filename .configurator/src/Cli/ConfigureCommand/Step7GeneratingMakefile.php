@@ -21,7 +21,6 @@ final class Step7GeneratingMakefile
 
         $io->section(sprintf('Step 7 of %d: Generating Makefile', $stepsTotal));
 
-        $filesystem->remove($this->pluginTemplateDir . '/Makefile');
         $filesystem->dumpFile($this->pluginTemplateDir . '/Makefile', $this->getMakefileContent($configuration));
 
         $io->info('Generated Makefile');

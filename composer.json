@@ -40,7 +40,7 @@
     },
     "scripts": {
         "post-create-project-cmd": [
-            "php configure.php"
+            "php .configurator/cli configure"
         ]
     },
     "config": {
