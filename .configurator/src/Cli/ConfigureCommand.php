@@ -102,7 +102,7 @@ final class ConfigureCommand extends Command
             $input->setOption('description', $description);
         }
 
-        $io->info('Tooling configuration');
+        $io->section('Tooling configuration');
 
         if ([] === $input->getOption('packages')) {
             $chosenPackages = [];
@@ -129,7 +129,7 @@ final class ConfigureCommand extends Command
             $input->setOption('removeScaffoldedFiles', !$removeScaffoldedFiles);
         }
 
-        $io->info('Database configuration');
+        $io->section('Development environment configuration');
 
         if (null === $input->getOption('databaseEngine')) {
             $databaseChoiceQuestion = new ChoiceQuestion('What is the database engine?', ['mysql', 'pgsql'], 'mysql');
