@@ -54,20 +54,24 @@ final class Step5CleanUpSections
 
     private function getSectionsToBeCleanedUp(PluginConfiguration $configuration): array
     {
-        $result = [];
+        $result = [
+            'scaffolded' => [],
+            'phpspec' => [],
+            'behat' => [],
+            'readme' => [],
+        ];
 
-        $result['scaffolded'] = [];
+        if ($configuration->useEcs()) {
+            $result['phpspec']['ecs.php'] = $configuration->usePhpSpec() ? self::LEAVE : self::REMOVE;
+            $result['behat']['ecs.php'] = $configuration->useBehat() ? self::LEAVE : self::REMOVE;
+        }
+
+        if ($configuration->usePhpStan()) {
+            $result['behat']['phpstan.neon'] = $configuration->useBehat() ? self::LEAVE : self::REMOVE;
+        }
+
         $result['scaffolded']['tests/Application/webpack.config.js'] = $configuration->removeScaffoldedFiles() ? self::REMOVE : self::LEAVE;
-
-        $result['phpspec'] = [];
-        $result['phpspec']['ecs.php'] = $configuration->usePhpSpec() ? self::LEAVE : self::REMOVE;
-
-        $result['behat'] = [];
-        $result['behat']['ecs.php'] = $configuration->useBehat() ? self::LEAVE : self::REMOVE;
-        $result['behat']['phpstan.neon'] = $configuration->useBehat() ? self::LEAVE : self::REMOVE;
         $result['behat']['tests/Application/config/bundles.php'] = $configuration->useBehat() ? self::LEAVE : self::REMOVE;
-
-        $result['readme'] = [];
         $result['readme']['README.md'] = self::REMOVE;
 
         return $result;

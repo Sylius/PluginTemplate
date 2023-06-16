@@ -16,48 +16,41 @@ final class Summarizer
     {
         $io = new SymfonyStyle($input, $output);
 
-        $packages = $input->getOption('packages');
-
         $io->section('Plugin configuration summary');
 
         $io->definitionList(
-            ['Name' => $input->getOption('pluginName')],
-            ['Vendor' => $input->getOption('vendorName')],
-            ['Package name' => $input->getOption('packageName')],
+            ['Name' => $input->getArgument('pluginName')],
+            ['Vendor' => $input->getArgument('vendorName')],
+            ['Package name' => $input->getArgument('packageName')],
             ['Namespace' => NameGenerator::generateNamespace(
-                $input->getOption('vendorName'),
-                $input->getOption('pluginName'),
+                $input->getArgument('vendorName'),
+                $input->getArgument('pluginName'),
                 doubleDashed: false,
             )],
             new TableSeparator(),
             'Utilities',
             '',
-            ['Use Docker' => self::isPackageEnabled('docker', $packages) ? 'Yes' : 'No'],
+            ['Use Docker' => $input->getOption('no-docker') ? 'No' : 'Yes'],
             new TableSeparator(),
             'Static Analysis',
             '',
-            ['Use Psalm' => self::isPackageEnabled('psalm', $packages) ? 'Yes' : 'No'],
-            ['Use PHPStan' => self::isPackageEnabled('phpstan', $packages) ? 'Yes' : 'No'],
-            ['Use Easy Coding Standard' => self::isPackageEnabled('ecs', $packages) ? 'Yes' : 'No'],
+            ['Use Psalm' => $input->getOption('no-psalm') ? 'No' : 'Yes'],
+            ['Use PHPStan' => $input->getOption('no-phpstan') ? 'No' : 'Yes'],
+            ['Use Easy Coding Standard' => $input->getOption('no-ecs') ? 'No' : 'Yes'],
             new TableSeparator(),
             'Testing',
             '',
-            ['Use PHPUnit' => self::isPackageEnabled('phpunit', $packages) ? 'Yes' : 'No'],
-            ['Use PHPSpec' => self::isPackageEnabled('phpspec', $packages) ? 'Yes' : 'No'],
-            ['Use Behat' => self::isPackageEnabled('behat', $packages) ? 'Yes' : 'No'],
+            ['Use PHPUnit' => $input->getOption('no-phpunit') ? 'No' : 'Yes'],
+            ['Use PHPSpec' => $input->getOption('no-phpspec') ? 'No' : 'Yes'],
+            ['Use Behat' => $input->getOption('no-behat') ? 'No' : 'Yes'],
             new TableSeparator(),
             'Database',
             '',
-            ['Database user' => $input->getOption('databaseUser')],
-            ['Database password' => '********'],
-            ['Database name' => $input->getOption('databaseName')],
-            ['Database host' => $input->getOption('databaseHost')],
-            ['Database port' => $input->getOption('databasePort')],
+            ['Database user' => null === $input->getOption('database-user') ? 'Not configured' : $input->getOption('database-user')],
+            ['Database password' => null === $input->getOption('database-password') ? 'Not configured' : $input->getOption('database-password')],
+            ['Database name' => null === $input->getOption('database-name') ? 'Not configured' : $input->getOption('database-name')],
+            ['Database host' => null === $input->getOption('database-host') ? 'Not configured' : $input->getOption('database-host')],
+            ['Database port' => null === $input->getOption('database-port') ? 'Not configured' : $input->getOption('database-port')],
         );
-    }
-
-    private static function isPackageEnabled(string $packageKey, array $packages): bool
-    {
-        return in_array($packageKey, $packages, true);
     }
 }

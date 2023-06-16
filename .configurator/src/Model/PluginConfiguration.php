@@ -11,15 +11,21 @@ final class PluginConfiguration
         private string $pluginName,
         private string $packageName,
         private string $description,
-        private array $packages,
+        private bool $useDocker,
+        private bool $usePsalm,
+        private bool $usePhpStan,
+        private bool $useEcs,
+        private bool $usePhpUnit,
+        private bool $usePhpSpec,
+        private bool $useBehat,
         private bool $useGitHubActions,
-        private bool $removeScaffoldedFiles,
-        private string $databaseEngine,
-        private string $databaseUser,
-        private string $databasePassword,
-        private string $databaseName,
-        private string $databaseHost,
-        private string $databasePort,
+        private bool $keepScaffoldedFiles,
+        private ?string $databaseEngine = null,
+        private ?string $databaseUser = null,
+        private ?string $databasePassword = null,
+        private ?string $databaseName = null,
+        private ?string $databaseHost = null,
+        private ?string $databasePort = null,
     ) {
     }
 
@@ -45,37 +51,37 @@ final class PluginConfiguration
 
     public function useDocker(): bool
     {
-        return in_array('docker', $this->packages, true);
+        return $this->useDocker;
     }
 
     public function usePsalm(): bool
     {
-        return in_array('psalm', $this->packages, true);
+        return $this->usePsalm;
     }
 
     public function usePhpStan(): bool
     {
-        return in_array('phpstan', $this->packages, true);
+        return $this->usePhpStan;
     }
 
     public function useEcs(): bool
     {
-        return in_array('ecs', $this->packages, true);
+        return $this->useEcs;
     }
 
     public function usePhpUnit(): bool
     {
-        return in_array('phpunit', $this->packages, true);
+        return $this->usePhpUnit;
     }
 
     public function usePhpSpec(): bool
     {
-        return in_array('phpspec', $this->packages, true);
+        return $this->usePhpSpec;
     }
 
     public function useBehat(): bool
     {
-        return in_array('behat', $this->packages, true);
+        return $this->useBehat;
     }
 
     public function useGitHubActions(): bool
@@ -85,11 +91,20 @@ final class PluginConfiguration
 
     public function removeScaffoldedFiles(): bool
     {
-        return $this->removeScaffoldedFiles;
+        return !$this->keepScaffoldedFiles;
+    }
+
+    public function isDatabaseConfigured(): bool
+    {
+        return $this->databaseEngine !== null;
     }
 
     public function getDatabaseConnectionString(): string
     {
+        if (!$this->isDatabaseConfigured()) {
+            throw new \RuntimeException('Database is not configured');
+        }
+
         return sprintf(
             '%s://%s:%s@%s:%s/%s',
             $this->databaseEngine,
@@ -108,15 +123,21 @@ final class PluginConfiguration
             $data['pluginName'],
             $data['packageName'],
             $data['description'],
-            $data['packages'],
-            $data['useGitHubActions'],
-            $data['removeScaffoldedFiles'],
-            $data['databaseEngine'],
-            $data['databaseUser'],
-            $data['databasePassword'],
-            $data['databaseName'],
-            $data['databaseHost'],
-            $data['databasePort'],
+            !$data['no-docker'],
+            !$data['no-psalm'],
+            !$data['no-phpstan'],
+            !$data['no-ecs'],
+            !$data['no-phpunit'],
+            !$data['no-phpspec'],
+            !$data['no-behat'],
+            !$data['no-github-actions'],
+            !$data['no-scaffold'],
+            $data['database-engine'],
+            $data['database-user'],
+            $data['database-password'],
+            $data['database-name'],
+            $data['database-host'],
+            $data['database-port'],
         );
     }
 }

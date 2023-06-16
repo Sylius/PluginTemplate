@@ -71,9 +71,8 @@ final class Step1ReplacePlaceholders
         $vendorName = $configuration->getVendorName();
         $pluginName = $configuration->getPluginName();
 
-        return [
+        $result = [
             ':config_key' => NameGenerator::generateConfigKey($vendorName, $pluginName),
-            ':database_connection_string' => $configuration->getDatabaseConnectionString(),
             ':extension_class' => NameGenerator::generateExtensionClass($vendorName, $pluginName),
             ':full_namespace_double_backslash' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: true),
             ':full_namespace' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: false),
@@ -86,5 +85,11 @@ final class Step1ReplacePlaceholders
             ':webpack_asset_name' => NameGenerator::generateWebpackAssetName($vendorName, $pluginName),
             ':vendor_name_slug' => NameGenerator::slugify($vendorName),
         ];
+
+        if ($configuration->isDatabaseConfigured()) {
+            $result[':database_connection_string'] = $configuration->getDatabaseConnectionString();
+        }
+
+        return $result;
     }
 }
