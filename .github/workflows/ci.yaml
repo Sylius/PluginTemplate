@@ -70,6 +70,9 @@ jobs:
             -   name: Configure plugin
                 run: composer configure -- Sylius ExamplePlugin sylius/example-plugin "Our example plugin for Sylius" -n
 
+            -   name: Setup plugin
+                run: make setup
+
             -
                 name: Run Behat JS
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun
