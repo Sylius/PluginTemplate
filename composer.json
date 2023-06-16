@@ -39,8 +39,9 @@
         }
     },
     "scripts": {
+        "configure": "php .configurator/cli configure",
         "post-create-project-cmd": [
-            "php .configurator/cli configure"
+            "@configure"
         ]
     },
     "config": {
