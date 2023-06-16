@@ -6,7 +6,6 @@
 /.gitignore export-ignore
 /behat.yml.dist export-ignore
 /bin export-ignore
-/composer.json.template export-ignore
 /docker-compose.yml export-ignore
 /docs export-ignore
 /ecs.php export-ignore
@@ -20,5 +19,4 @@
 /psalm.xml export-ignore
 /spec export-ignore
 /symfony.lock export-ignore
-/symfony.lock.example export-ignore
 /tests export-ignore
