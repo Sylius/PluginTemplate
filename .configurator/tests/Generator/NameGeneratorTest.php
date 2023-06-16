@@ -4,13 +4,12 @@ declare(strict_types=1);
 
 namespace Sylius\PluginTemplate\Configurator\Tests\Generator;
 
-use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
 use Sylius\PluginTemplate\Configurator\Generator\NameGenerator;
 
 final class NameGeneratorTest extends TestCase
 {
-    #[Test]
+    /** @test */
     public function it_generates_package_name(): void
     {
         $this->assertSame(
@@ -23,7 +22,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_namespace(): void
     {
         $this->assertSame(
@@ -44,7 +43,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_config_key(): void
     {
         $this->assertSame(
@@ -57,7 +56,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_plugin_class(): void
     {
         $this->assertSame(
@@ -70,7 +69,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_lowercase_plugin_class(): void
     {
         $this->assertSame(
@@ -83,7 +82,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_extension_class(): void
     {
         $this->assertSame(
@@ -96,7 +95,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_generates_webpack_asset_name(): void
     {
         $this->assertSame(
@@ -109,7 +108,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_converts_a_string_to_pascal_case(): void
     {
         $this->assertSame(
@@ -122,7 +121,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_converts_a_string_to_snake_case(): void
     {
         $this->assertSame(
@@ -135,7 +134,7 @@ final class NameGeneratorTest extends TestCase
         );
     }
 
-    #[Test]
+    /** @test */
     public function it_slugify_a_string(): void
     {
         $this->assertSame(
