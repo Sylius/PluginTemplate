@@ -50,7 +50,6 @@ final class Step7GeneratingMakefile
         	@cd tests/Application && APP_ENV=test bin/console doctrine:database:create --if-not-exists
         	@cd tests/Application && APP_ENV=test bin/console doctrine:migrations:migrate -n
         	@cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load -n
-        	@make serve
 
         MAKEFILE;
 
