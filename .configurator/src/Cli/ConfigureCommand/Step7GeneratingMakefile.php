@@ -146,7 +146,7 @@ final class Step7GeneratingMakefile
 
         if ($staticAnalysisTools !== [] && $testingTools !== []) {
             $content .= <<<MAKEFILE
-            ci: static-analysis test
+            ci: qa.static-analysis qa.tests
             MAKEFILE;
             $content .= PHP_EOL;
         }
