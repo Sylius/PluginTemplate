@@ -11,6 +11,7 @@ use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step4RemoveScaffolde
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step5CleanUpSections;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step6RenameFiles;
 use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step7GeneratingMakefile;
+use Sylius\PluginTemplate\Configurator\Cli\ConfigureCommand\Step8FinishSetup;
 use Sylius\PluginTemplate\Configurator\Finder\FileFinder;
 use Sylius\PluginTemplate\Configurator\Modifier\ComposerModifier;
 use Sylius\PluginTemplate\Configurator\Replacer\PlaceholderReplacer;
@@ -82,5 +83,13 @@ return static function (ContainerConfigurator $containerConfigurator) {
             '%configurator.plugin_template_dir%',
         ])
         ->tag('configurator.step', ['priority' => -6])
+    ;
+
+    $services
+        ->set(Step8FinishSetup::class)
+        ->args([
+            '%configurator.plugin_template_dir%',
+        ])
+        ->tag('configurator.step', ['priority' => -7])
     ;
 };
