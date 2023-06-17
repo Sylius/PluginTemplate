@@ -51,14 +51,15 @@ final class Step7GeneratingMakefile
         	@cd tests/Application && APP_ENV=test bin/console doctrine:database:create --if-not-exists
         	@cd tests/Application && APP_ENV=test bin/console doctrine:migrations:migrate -n
         	@cd tests/Application && APP_ENV=test bin/console sylius:fixtures:load -n
-
         MAKEFILE;
+        $content .= PHP_EOL;
 
         if ($configuration->useEcs()) {
             $content .= <<<MAKEFILE
             ecs:
             	@vendor/bin/ecs
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($configuration->usePsalm()) {
@@ -66,6 +67,7 @@ final class Step7GeneratingMakefile
             psalm:
             	@vendor/bin/psalm
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($configuration->usePhpStan()) {
@@ -73,6 +75,7 @@ final class Step7GeneratingMakefile
             phpstan:
             	@vendor/bin/phpstan
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($configuration->usePhpSpec()) {
@@ -80,6 +83,7 @@ final class Step7GeneratingMakefile
             phpspec:
             	@vendor/bin/phpspec run
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($configuration->usePhpUnit()) {
@@ -87,6 +91,7 @@ final class Step7GeneratingMakefile
             phpunit:
             	@vendor/bin/phpunit
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($configuration->useBehat()) {
@@ -96,6 +101,7 @@ final class Step7GeneratingMakefile
             behat.nojs:
             	@vendor/bin/behat --tags="~@javascript"
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         $staticAnalysisTools = [];
@@ -117,6 +123,7 @@ final class Step7GeneratingMakefile
             $content .= <<<MAKEFILE
             qa.static-analysis: ${staticAnalysisTools}
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         $testingTools = [];
@@ -134,13 +141,14 @@ final class Step7GeneratingMakefile
             $content .= <<<MAKEFILE
             qa.tests: ${testingTools}
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         if ($staticAnalysisTools !== [] && $testingTools !== []) {
             $content .= <<<MAKEFILE
             ci: static-analysis test
-
             MAKEFILE;
+            $content .= PHP_EOL;
         }
 
         return $content;
