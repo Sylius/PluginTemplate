@@ -44,6 +44,7 @@ final class Step7GeneratingMakefile
         setup:
         	@composer update
         	@make frontend.setup
+        	@cd tests/Application && bin/console assets:install
         	@cd tests/Application && bin/console doctrine:database:create --if-not-exists
         	@cd tests/Application && bin/console doctrine:migrations:migrate -n
         	@cd tests/Application && bin/console sylius:fixtures:load -n
