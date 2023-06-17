@@ -75,6 +75,8 @@ final class Step2RemoveUnusedFiles
             $result[] = 'behat.yml.dist';
             $result[] = 'etc';
             $result[] = 'features';
+            $result[] = 'tests/Application/config/services_test.yaml';
+            $result[] = 'tests/Application/config/services_test_cached.yaml';
             $result[] = 'tests/Behat';
         }
 
