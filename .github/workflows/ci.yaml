@@ -134,6 +134,9 @@ jobs:
 
             -   name: Warm up container (test)
                 run: tests/Application/bin/console cache:warmup --env=test
+            
+            -   name: Run CI scripts
+                run: make ci
 
             -   name: Run webserver
                 env:
