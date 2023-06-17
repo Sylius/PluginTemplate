@@ -20,4 +20,14 @@ class Kernel extends BaseKernel
     {
         $container->addCompilerPass(new RemoveDefaultCommandsPass());
     }
+
+    public function getCacheDir(): string
+    {
+        return sprintf(
+            '%s/%s/%s',
+            sys_get_temp_dir(),
+            'sylius-plugin-configurator-cache',
+            $this->getEnvironment(),
+        );
+    }
 }
