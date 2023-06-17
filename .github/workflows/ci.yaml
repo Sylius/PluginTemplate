@@ -129,11 +129,21 @@ jobs:
             -   name: Setup plugin
                 run: make setup
 
+            -   name: Warm up container (normal)
+                run: tests/Application/bin/console cache:warmup
+
+            -   name: Warm up container (test)
+                run: tests/Application/bin/console cache:warmup --env=test
+
             -   name: Run webserver
+                env:
+                    APP_ENV: test
                 run: symfony server:start --port=8080 --dir=tests/Application --daemon
 
             -
-                name: Run Behat JS
+                name: Run Behat
+                env:
+                    APP_ENV: test
                 run: vendor/bin/behat --colors --strict -vvv --no-interaction || vendor/bin/behat --colors --strict -vvv --no-interaction --rerun
 
             -
