@@ -22,6 +22,8 @@
 - PHP version 8.0 or higher
 - Node.js version 16 or higher
 
+If you want to start quickly, it is recommended to install the [Symfony CLI](https://symfony.com/download). It will help you to run the project locally with using our Make commands.
+
 ### Usage
 
 This repo can be used to scaffold a Sylius plugin. Follow these steps to get started:
