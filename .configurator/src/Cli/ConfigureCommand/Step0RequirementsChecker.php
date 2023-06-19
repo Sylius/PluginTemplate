@@ -13,26 +13,31 @@ final class Step0RequirementsChecker
     {
         $io->section('Checking requirements');
 
-        $isMakeInstalled = (bool) shell_exec('command -v make');
-        $isNodeInstalled = (bool) shell_exec('command -v node');
-
-        if (!$isMakeInstalled) {
-            $io->error('GNU Make is not installed. Please install it before continuing.');
-            exit(1);
-        }
-
-        $io->success('GNU Make is installed.');
-
-        if (!$isNodeInstalled) {
-            $io->error('Node.js is not installed. Please install it before continuing.');
-            exit(1);
-        }
-
-        $io->success('Node.js is installed.');
-
         if ($this->isWindows()) {
             $io->error('This plugin template is not compatible with Windows. Please use Linux (Bare metal, Docker or WSL) or macOS.');
             exit(1);
+        }
+
+        $isMakeInstalled = (bool) shell_exec('command -v make');
+        $isNodeInstalled = (bool) shell_exec('command -v node');
+        $isSymfonyBinaryInstalled = (bool) shell_exec('command -v symfony');
+
+        $io->writeln([
+            sprintf('%s Make', $isMakeInstalled ? '✅' : '❌'),
+            sprintf('%s Node.js', $isNodeInstalled ? '✅' : '❌'),
+            sprintf('%s Symfony binary', $isSymfonyBinaryInstalled ? '✅' : '⚠️'),
+        ]);
+
+        if (!$isMakeInstalled || !$isNodeInstalled) {
+            $io->error('Make and Node.js are required to use this plugin template.');
+            exit(1);
+        }
+
+        if (!$isSymfonyBinaryInstalled) {
+            $io->warning('Symfony binary is not installed. You will not be able to use make serve command to start your local development server.');
+            $io->confirm('Do you want to continue the plugin configuration anyway?', false);
+
+            return;
         }
 
         $io->success('Requirements met!');
