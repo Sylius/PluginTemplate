@@ -78,16 +78,20 @@ final class ConfigureCommand extends Command
 
         $io->writeln([
             'All done! Now you can start developing your plugin.',
-            'To start the development environment, run:',
+            'To set up the development environment, run:',
         ]);
 
-        $io->info(sprintf('cd %s && make setup', $this->pluginTemplateDir));
+        $io->block(sprintf('cd %s && make setup', $this->pluginTemplateDir), style: 'fg=green', padding: true);
 
-        $io->writeln([
-            'If you want to use git, run:',
-        ]);
+        $io->writeln('If you want to use git, run:');
 
-        $io->info('git init');
+        $io->block('git init', style: 'fg=green', padding: true);
+
+        $io->writeln('To start the local development server, run:');
+
+        $io->block('make serve', style: 'fg=green', padding: true);
+
+        $io->writeln('Happy coding!🎉🧑‍💻');
 
         return self::SUCCESS;
     }
