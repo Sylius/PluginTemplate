@@ -21,6 +21,7 @@ final class ConfigureCommand extends Command
     private array $steps;
 
     public function __construct (
+        private string $pluginTemplateDir,
         iterable $steps,
     ) {
         $this->steps = $steps instanceof Traversable ? iterator_to_array($steps) : $steps;
@@ -72,6 +73,21 @@ final class ConfigureCommand extends Command
         foreach ($this->steps as $step) {
             $step($io, $configuration, count($this->steps) - 1); // -1 because we don't count the requirements step
         }
+
+        $io->success('Plugin configured successfully!🎉');
+
+        $io->writeln([
+            'All done! Now you can start developing your plugin.',
+            'To start the development environment, run:',
+        ]);
+
+        $io->info(sprintf('cd %s && make setup', $this->pluginTemplateDir));
+
+        $io->writeln([
+            'If you want to use git, run:',
+        ]);
+
+        $io->info('git init');
 
         return self::SUCCESS;
     }

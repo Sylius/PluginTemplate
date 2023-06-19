@@ -12,6 +12,7 @@ return static function (ContainerConfigurator $containerConfigurator) {
     $services
         ->set(ConfigureCommand::class)
         ->args([
+            '%configurator.plugin_template_dir%',
             tagged_iterator('configurator.step'),
         ])
         ->tag('console.command', ['configurator' => true])

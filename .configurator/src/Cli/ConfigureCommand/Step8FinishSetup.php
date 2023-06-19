@@ -21,14 +21,10 @@ final class Step8FinishSetup
 
         $io->section(sprintf('Step 8 of %d: Finishing setup', $stepsTotal));
 
-        $io->info('Switching to the plugin directory');
-
-        chdir($this->pluginTemplateDir);
-
         $io->info('Removing configurator files');
 
         $filesystem->remove(sprintf('%s/.configurator', $this->pluginTemplateDir));
 
-        $io->success(sprintf('Step 7 of %d completed!', $stepsTotal));
+        $io->success(sprintf('Step 8 of %d completed!', $stepsTotal));
     }
 }
