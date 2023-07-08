@@ -62,7 +62,7 @@ final class Step4RemoveScaffoldedFiles
     {
         $result = [];
 
-        $result[] = 'config.config.yaml.empty';
+        $result[] = 'config/config.yaml.empty';
         $result[] = 'config/shop_routing.yml.empty';
         $result[] = 'config/services.xml.empty';
         $result[] = 'features/.gitkeep';
