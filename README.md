@@ -46,7 +46,7 @@ This is where your description should go. Limit it to a paragraph or two. Consid
 
 ## Installation
 
-1. Run `composer require :vendor_name_slug/:plugin_name_slug`.
+1. Run `composer require :package_name`.
 
 2. Import routes
     ```yaml
