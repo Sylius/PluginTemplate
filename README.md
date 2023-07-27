@@ -39,8 +39,8 @@ After that you can clone your freshly created repository and run `make configure
 </section:readme>
 # :plugin_name
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)
-[![Total Downloads](https://img.shields.io/packagist/dt/:vendor_name_slug/:plugin_name_slug.svg?style=flat-square)](https://packagist.org/packages/:vendor_name_slug/:plugin_name_slug)  
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/:package_name.svg?style=flat-square)](https://packagist.org/packages/:package_name)
+[![Total Downloads](https://img.shields.io/packagist/dt/:package_name.svg?style=flat-square)](https://packagist.org/packages/:package_name)  
 
 This is where your description should go. Limit it to a paragraph or two. Consider adding a small example.
 
