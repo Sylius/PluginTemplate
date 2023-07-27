@@ -66,10 +66,12 @@ final class Step1ReplacePlaceholders
         return iterator_to_array($files);
     }
 
+    /** @return array<string, string> */
     private function getPlaceholdersWithReplacements(PluginConfiguration $configuration): array
     {
         $vendorName = $configuration->getVendorName();
         $pluginName = $configuration->getPluginName();
+        $packageName = $configuration->getPackageName();
 
         $result = [
             ':config_key' => NameGenerator::generateConfigKey($vendorName, $pluginName),
@@ -77,7 +79,7 @@ final class Step1ReplacePlaceholders
             ':full_namespace_double_backslash' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: true),
             ':full_namespace' => NameGenerator::generateNamespace($vendorName, $pluginName, doubleDashed: false),
             ':package_description' => $configuration->getDescription(),
-            ':package_name' => NameGenerator::generatePackageName($vendorName, $pluginName),
+            ':package_name' => $packageName,
             ':plugin_class_lowercase' => NameGenerator::generatePluginClassLowercase($vendorName, $pluginName),
             ':plugin_class' => NameGenerator::generatePluginClass($vendorName, $pluginName),
             ':plugin_name_slug' => NameGenerator::slugify($pluginName),
